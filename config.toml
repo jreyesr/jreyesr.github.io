@@ -9,6 +9,12 @@ style = 'auto'
 readMore = true
 rssAsSocialIcon = true
 
+utterancesRepo = "jreyesr/jreyesr.github.io"
+utterancesTheme = "preferred-color-scheme"
+utterancesIssue = "pathname"
+utterancesLabel = "utteranc.es"
+
+
 [[params.social]]
 id = "github"
 url = "https://github.com/jreyesr"
