@@ -1,0 +1,1 @@
+<a href="{{ .Get "link" | safeURL }}"{{ with .Get "title"}} title="{{ . }}"{{ end }}{{ if strings.HasPrefix (.Get "link") "http" }} target="_blank"{{ end }}>{{ .Get "text" }}</a>{{- "" -}}

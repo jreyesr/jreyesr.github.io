@@ -1,0 +1,15 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = '''jreyesr's blog'''
+theme = 'anubis'
+
+[params]
+author = 'jreyesr'
+style = 'auto'
+readMore = true
+rssAsSocialIcon = true
+
+[[params.social]]
+id = "github"
+url = "https://github.com/jreyesr"
+
