@@ -3,7 +3,8 @@ title: "Insomnia Plugin: Batch Requests"
 date: 2023-02-17T20:39:32-05:00
 draft: false
 summary: In which we introduce and describe an Insomnia plugin that can repeatedly send a request, varying arbitrary parts of it with data taken from a CSV file, and also extract response data and save it to the aforementioned CSV file.
-description: Test
+tags: ["rest", "insomnia", "open-source"]
+categories: ["react", "nodejs", "http"]
 ---
 
 ## TL;DR

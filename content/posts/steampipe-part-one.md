@@ -4,6 +4,8 @@ title: "Steampipe, Part One"
 date: 2023-02-22T19:41:45-05:00
 draft: false
 summary: This article presents [Steampipe](https://steampipe.io), an aplication that presents disparate data (such as REST APIs) as SQL tables, allowing you to join data across API boundaries. It explains the inner workings of Steampipe plugins, that enable new data sources to be used with it. Finally, it presents a [template repository](https://github.com/jreyesr/steampipe-plugin-samplerest) that can be used as a starter by anyone wanting to create his own plugins.
+tags: ['steampipe', 'open-source']
+categories: ['go', 'sql']
 ---
 
 ## About Steampipe
