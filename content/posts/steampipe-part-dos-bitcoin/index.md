@@ -1,5 +1,5 @@
 ---
-title: "Steampipe, Part Dos"
+title: "Steampipe, Part Dos: Bitcoin plugin"
 date: 2023-03-04T16:59:52-05:00
 draft: false
 summary: This article presents a plugin for [Steampipe](https://steampipe.io) that allows you to query the Bitcoin network for information about wallets and transactions. It also covers some gotchas found while developing such a plugin.
