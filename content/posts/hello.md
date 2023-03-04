@@ -2,6 +2,7 @@
 title: "Hello!"
 date: 2023-02-07T21:29:07-05:00
 draft: false
+tags: ["meta"]
 ---
 
 You have reached the blog of {{< external-link text="jreyesr" link="https://github.com/jreyesr" >}}!
