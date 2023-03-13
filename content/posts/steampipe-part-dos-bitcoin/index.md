@@ -9,6 +9,8 @@ categories: ['go', 'sql']
 
 In this post, we'll cover the development of a [Steampipe](https://steampipe.io) plugin that provides information about Bitcoin wallets and transactions. For a wallet, you'll be able to get its current balance, the number of transactions that it has participated in, and its total cash flow (both incoming and outgoing). You'll additionally be able to list all transactions that involved a specific wallet. For a specific transaction, you'll be able to see its date, amount, fee and the wallets that participated in it.
 
+> **UPDATE, 2023-03-13:** This is not all! The plugin now features automatic retries in case of API rate limits, a bunch of automated checks that can be run on demand, and a dashboard that can be used to get some information about a Bitcoin wallet. For more information, see [the next post](https://jreyesr.github.io/posts/steampipe-part-int-pi-mods/).
+
 Some possible uses of this plugin may be:
 
 * Monitor your own wallet, and get alerts when its balance goes down (an unauthorized withdrawal alert, yay!)
