@@ -7,7 +7,7 @@ categories: ['react', 'nextjs']
 favorite: true
 ---
 
-This post introduces OpenChatflow (tentative name, subject to changes, yadda yadda), a new application to design, test, run and monitor Telegram chatbots.
+This post introduces [OpenChatflow](https://github.com/jreyesr/openchatflow) (tentative name, subject to changes, yadda yadda), a new application to design, test, run and monitor Telegram chatbots.
 
 Also, fair warning: the application does not exist. It will, hopefully. But it doesn't yet.
 
@@ -16,6 +16,8 @@ Telegram has [bots](https://core.telegram.org/bots) that can perform fairly adva
 Here's the executive summary: it's an application in which you can graphically design Telegram chatbots, with their different conversation paths. You'll be able to drag and drop questions that will be asked to the user, and depending on his answers, the bot will take a different path. You'll also be able to save the user's responses and take actions when a certain point is reached. You'll be able to do this for multiple bots performing multiple conversations. You'll be able to see ongoing conversations. All of this will be hosted in the comfort of your own infrastructure.
 
 _Phew_. That was 92.5&pm;2.5 words, in case you were wondering.
+
+The code will be hosted [in this repo](https://github.com/jreyesr/openchatflow) (as of publishing this there's nothing there, that will change soon&trade;)
 
 ## Scope
 
