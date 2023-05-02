@@ -3,7 +3,7 @@ title: "Insomnia Plugin: Batch Requests"
 date: 2023-02-17T20:39:32-05:00
 draft: false
 summary: In which we introduce and describe an Insomnia plugin that can repeatedly send a request, varying arbitrary parts of it with data taken from a CSV file, and also extract response data and save it to the aforementioned CSV file.
-tags: ["rest", "insomnia", "open-source"]
+tags: ["rest", "insomnia", "open-source", "new-project", "announcements"]
 categories: ["react", "nodejs", "http"]
 ---
 
@@ -22,6 +22,7 @@ You can install it on your Insomnia installation by going to `Application>Prefer
 (Sportscaster voice) Hello, and welcome to the first real article in the blog! Today we face Insomnia and its fearsome plugin architecture.
 
 Okay, enough of that. Today's objective is to create an Insomnia plugin, whereby you can:
+
 1. Write a request as normal, but leaving one or more pieces of the request as variables (i.e., placeholders)
 2. Providing a CSV file to Insomnia, which should have multiple combinations of values for the placeholders
 3. Running the request once for each entry in the CSV file, replacing all placeholders with the values of each line
@@ -51,21 +52,21 @@ You may be interested in the plugin if some of the following sounds like somethi
 Here's a list of alternatives that you can use today. None of them are quite the same, so there's a niche to fill with this plugin:
 
 * Postman's [Test Runner](https://blog.postman.com/using-csv-and-json-files-in-the-postman-collection-runner/). It can take a CSV or JSON file, and repeat a collection of requests. Some cons:
-   * It can only run a collection at a time. Most of the time you only want to run a single request (any dependencies can be taken care of via [request chaining](https://docs.insomnia.rest/insomnia/chaining-requests)). Creating a collection to put a single request inside of it seems... weird.
-   * You cannot extract data from the responses (at least, not easily). You could probably rig something with the tests that run after a response is received, but that's not clean at all.
-   * It's strictly serial (requests are sent one by one). Sometimes you want requests to be parallel for *speed*! *Future jreyesr speaks:* This plugin is also serial, but it may be possible to parallelize it in the future.
-   * It seems geared towards API testing (providing multiple test cases and writing tests to ensure that some conditions are always true), which is not what this plugin is about.
-   * It's Postman, which I don't really like since they attempt to cajole you into creating an online account. No, thanks.
+  * It can only run a collection at a time. Most of the time you only want to run a single request (any dependencies can be taken care of via [request chaining](https://docs.insomnia.rest/insomnia/chaining-requests)). Creating a collection to put a single request inside of it seems... weird.
+  * You cannot extract data from the responses (at least, not easily). You could probably rig something with the tests that run after a response is received, but that's not clean at all.
+  * It's strictly serial (requests are sent one by one). Sometimes you want requests to be parallel for *speed*! *Future jreyesr speaks:* This plugin is also serial, but it may be possible to parallelize it in the future.
+  * It seems geared towards API testing (providing multiple test cases and writing tests to ensure that some conditions are always true), which is not what this plugin is about.
+  * It's Postman, which I don't really like since they attempt to cajole you into creating an online account. No, thanks.
 * Burp Suite's [Intruder](https://portswigger.net/burp/documentation/desktop/tools/intruder). Some cons:
-   * It's part of Burp, which is well-known in the cybersecurity circle and not much else. As a developer, you may not have it installed.
-   * It's an entirely new tool, with an *extensive* UI.
-   * It's not clear if you can provide multiple inputs to a request.
-   * Burp is most comfortable when you work entirely inside of it. You would need to do all your API work in it, instead of Insomnia, which is much well suited for that kind of work.
-   * Extracting data from the responses seems possible, but it's 
+  * It's part of Burp, which is well-known in the cybersecurity circle and not much else. As a developer, you may not have it installed.
+  * It's an entirely new tool, with an *extensive* UI.
+  * It's not clear if you can provide multiple inputs to a request.
+  * Burp is most comfortable when you work entirely inside of it. You would need to do all your API work in it, instead of Insomnia, which is much well suited for that kind of work.
+  * Extracting data from the responses seems possible, but it's 
 * Writing your own shell script with, say, [HTTPie](https://httpie.io/) for the requests and [jq](https://stedolan.github.io/jq/) for parsing data. It would probably work, but shell scripts are not the easiest to read, and there's no shiny UI.
 * Writing a Python script (or whatever your preferred scripting language is) to do the whole work. Cons:
-   * It's a lot of boilerplate code. When I have done it, almost all the code is generic code that doesn't do anything interesting: read and parse a CSV file, a for loop to compose and call the request, extracting data from the response, updating the CSV data, writing back to the file.
-   * It takes you outside of Insomnia again. Sure, you can right click the request and use the Generate Code function in your script, but any changes that you make are not sent back to Insomnia, which is probably more or less your source of truth for the requests.
+  * It's a lot of boilerplate code. When I have done it, almost all the code is generic code that doesn't do anything interesting: read and parse a CSV file, a for loop to compose and call the request, extracting data from the response, updating the CSV data, writing back to the file.
+  * It takes you outside of Insomnia again. Sure, you can right click the request and use the Generate Code function in your script, but any changes that you make are not sent back to Insomnia, which is probably more or less your source of truth for the requests.
 
 So, there's nothing that does exactly what I need. Let's build a plugin then! (Plus, I get to learn about Insomnia plugins while I'm at it, and the Internet gets another article about the subject, which may contain some useful information)
 
@@ -86,6 +87,7 @@ Two files are created: `package.json` and `main.js`. Let's start with `package.j
 The `insomnia` property is required, since it's used by the Plugin Hub and the Insomnia app. The only change that I made was to add a `displayName` property to it, and fill the `description`.
 
 The `main.js` file contains the plugin code. Insomnia provides multiple ways of extending functionality (see https://docs.insomnia.rest/insomnia/hooks-and-actions for a list of extension points):
+
 * Adding custom template tags that you can use when composing requests. From the documentation, “Tags can do things like transform strings, generate random numbers, handle UUIDs, and create timestamps”
 * Running code before sending a request, and after receiving a response.
 * Adding an item to the dropdown that appears when you click on a request.
@@ -170,7 +172,8 @@ export const templateTags = [{
 
 You need to somehow export an array of template tag objects. The structure of each object is described in [this link](https://docs.insomnia.rest/insomnia/template-tags#template-tag-schema). In this case, the plugin implements only one template tag, which is used to mark the locations that will be replaced with variable data.
  Some remarks about the code:
-1.  The `liveDisplayName` property controls the name that will be shown inside the blue(ish) rectangle that marks the tag. If you don't provide it, all instances of your tag will have the same name, provided in `displayName`. I implemented the live version to provide information about the configuration of the tag: in the screenshot above, every instance of the tag shows the CSV column that it will look for, and the sample value configured.
+
+1. The `liveDisplayName` property controls the name that will be shown inside the blue(ish) rectangle that marks the tag. If you don't provide it, all instances of your tag will have the same name, provided in `displayName`. I implemented the live version to provide information about the configuration of the tag: in the screenshot above, every instance of the tag shows the CSV column that it will look for, and the sample value configured.
 2. The `args` array is used to build the tag's configuration dialog, that appears when you double-click a tag instance. This tag requires two values, both strings: the CSV column name and the sample value. 
 3. The CSV column name is validated to ensure that it is not empty: if it is, a red error message appears on Insomnia.
 4. This is the render function. You need to declare it (and it must be async, apparently), and it will be called every time that Insomnia needs to know the value that your tag will take. The first parameter is always a `context` (sadly, its documentation is lacking), and any further parameters are the values that you declared in `args`, in the same order. 
@@ -189,7 +192,7 @@ import { templateTags } from './tags';
 module.exports.templateTags = templateTags;
 ```
 
-##  Creating a Request action
+## Creating a Request action
 
 A Request action is one of the provided extension points in Insomnia. It is shown when you right-click a request, under the Plugins section:
 
@@ -241,7 +244,7 @@ Once you click the action's button in the dropdown, you see the following modal 
 1. You first need to select a valid CSV file from your local disk.
 2. Once you select a file, this table displays the first five rows of the file, so that you can check the structure of the data. Your request should have one or more template tags configured to match one or more of the columns in this table.
 3. You can specify outputs that get extracted from the response. For every one, you choose a CSV column that will be used as a destination for the data, and a JSONPath expression that specifies how to extract data from the response.
-4.  The progress bar gets filled as the requests are sent.
+4. The progress bar gets filled as the requests are sent.
 5. The Run button is enabled once you have chosen a CSV file and all the Outputs are filled.
 
 All of that UI, plus the state handling and reactivity, is fairly standard React stuff. Components get declared, state gets used and passed to child components, events are used to send information upwards, conditional rendering happens, and so on. The `BatchDialog` element (in the `components/BatchDialog.js` file) is the parent element.
@@ -255,7 +258,7 @@ The real fun (when you click the Run button) happens in the `onRun` function in 
 
 export default function BatchDialog({context, request}) {
   // ...
-  
+
   // This gets called by the onClick property of the Run button
   const onRun = async () => {
     setSent(0);
@@ -323,6 +326,7 @@ for(const {name, jsonPath} of outputConfig) {
 ```
 
 The first part is a simple header check. If the response is not JSON, we don't even attempt to apply JSONPath expressions to it, we instead show an error alert and carry on. Otherwise, we:
+
 1. Read the response body from disk (the function that does it is not shown, it's a simple `fs.readFileSync()` call)
 2. Parse the response body as JSON (which should be OK, since the remote server is announcing that its response is JSON, as checked just above)
 3. For each JSONPath expression provided: (as a reminder, every Output has a JSONPath expression and a target column, selected from the CSV columns)
@@ -349,10 +353,13 @@ The final bit of the code is writing the results back to the same original file.
 There's no documentation that I could find on using React on an Insomnia plugin. I wanted something to render the dialog, with tables, dropdowns and buttons. React seems extremely heavy for such a task, but the authors of Insomnia have explicitly blessed it as a way to generate dialogs: see <https://github.com/Kong/insomnia/pull/2026#issue-593608595>.
 
  The following changes are required to run React inside a plugin:
-1. `npm i react react-dom`
-2. `npm i --save-dev parcel babel-preset-react-app`
-3. Add this to the `package.json` file:
 
+1. `npm i react react-dom`
+
+2. `npm i --save-dev parcel babel-preset-react-app`
+
+3. Add this to the `package.json` file:
+   
         ```json
         "scripts": {
             "dev": "parcel watch --no-source-maps main.js",
@@ -361,6 +368,7 @@ There's no documentation that I could find on using React on an Insomnia plugin.
         ```
 
 4. Edit the `main` property so that it is `dist/main.js`
+
 5. From now on, keep a shell with `npm run dev` running to keep the compiled file updated. After every change, run `Tools>Reload Plugins` on Insomnia.
 
 There's another change on the deploy process. You must ensure that you run `npm run build` before publishing the plugin. This will create the actual compiled file and place it in `dist/main.js`, which is declared in `package.json` as the main entrypoint and will be run by Insomnia. Otherwise, if you publish releases from Github Actions or any other CI/CD, the `dist` directory will not be included. You may not need any changes if you publish from your own computer, since it's likely that you will have the requisite directory there.
