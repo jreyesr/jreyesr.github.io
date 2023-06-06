@@ -1,5 +1,5 @@
 ---
-title: "Coopting Terraform into generic API management"
+title: "Coopting Terraform into generic API management, Part 1"
 date: 2023-06-02T20:06:15.000-05:00
 summary: "This article explores the usage of Terraform as applied to the problem of configuring generic APIs (i.e., those not related to cloud infrastructure). The motivation is to declaratively control APIs that only expose an imperative interface (such as essentially any REST-ish API)"
 tags: ['experiments', 'iac', 'rest']
@@ -294,7 +294,7 @@ Then, we need to also rename the provider's config (from `ScaffoldingProviderMod
 For Firefly, we'd need:
 
 * The URL where Firefly can be reached, and also the port (which will be part of the URL, there's no need to make it a separate parameter)
-* Credentials: A Client ID and Client Secret, since Firefly [can use OAuth2](https://docs.firefly-iii.org/firefly-iii/api/#authentication). It can also use a Personal Access Token, which is static, but let's be nice and use standards here. It shouldn't add too much more complexity
+* Credentials: A Personal Access Token, which is static. Originally I intended to use a Client ID and Client Secret, since Firefly [can use OAuth2](https://docs.firefly-iii.org/firefly-iii/api/#authentication), but the flow requires an interactive authorization stage that doesn't play too well with a CLI-based tool like Terraform.
 * That's it! We won't add TLS certificate validation yet, it's easy enough to add later and my local Firefly installation doesn't even use TLS
 
 This is expressed in two places: the struct itself, which is just a container for the actual configuration values with tags, [in the spirit of the `json` package](https://gobyexample.com/json), and the `Schema` method of the provider, which defines some metadata, such as descriptions, whether or not the config values are required, and some validators. 
@@ -305,8 +305,7 @@ This is expressed in two places: the struct itself, which is just a container fo
 // FireflyProviderModel describes the provider data model.
 type FireflyProviderModel struct {
 	Endpoint     types.String `tfsdk:"endpoint"`
-	ClientID     types.String `tfsdk:"client_id"`
-	ClientSecret types.String `tfsdk:"client_secret"`
+	AccessToken types.String `tfsdk:"access_token"`
 }
 
 func (p *FireflyProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
@@ -322,12 +321,8 @@ func (p *FireflyProvider) Schema(ctx context.Context, req provider.SchemaRequest
 					),
 				},
 			},
-			"client_id": schema.StringAttribute{
-				MarkdownDescription: "An OAuth2 Client ID generated on the Firefly web API. See [the docs](https://docs.firefly-iii.org/firefly-iii/api/#authentication) for instructions.",
-				Required:            true,
-			},
-			"client_secret": schema.StringAttribute{
-				MarkdownDescription: "An OAuth2 Client Secret generated on the Firefly web API. See [the docs](https://docs.firefly-iii.org/firefly-iii/api/#authentication) for instructions.",
+			"access_token": schema.StringAttribute{
+				MarkdownDescription: "A Personal Access Token generated on the Firefly web API. See [the docs](https://docs.firefly-iii.org/firefly-iii/api/#personal-access-token) for instructions.",
 				Required:            true,
 				Sensitive:           true,
 			},
@@ -336,7 +331,7 @@ func (p *FireflyProvider) Schema(ctx context.Context, req provider.SchemaRequest
 }
 ```
 
-Here we use validators to ensure that the instance URL looks like a URL. Also note that the Client Secret has `Sensitive: true`, which "indicates whether the value of this attribute should be considered sensitive data. Setting it to true will obscure the value in CLI output." Neat.
+Here we use validators to ensure that the instance URL looks like a URL. Also note that the Access Token has `Sensitive: true`, which "indicates whether the value of this attribute should be considered sensitive data. Setting it to true will obscure the value in CLI output." Neat.
 
 Those changes are [here](https://github.com/jreyesr/terraform-provider-firefly/commit/c2c537adbe545091840d2e508b608dbfdd01dd7a).
 
@@ -453,3 +448,115 @@ Note that all the fields are marked as `Computed: true` in the schema. According
 
 That code was added [here](https://github.com/jreyesr/terraform-provider-firefly/commit/c51ad6683e3855d92931cae7f8a84cf3a3ef091f).
 
+## Testing
+
+Now is a good time to stop for a bit and test the current features (just the data source, really). This is slightly convoluted since the provider hasn't been published yet, and so you have to convince your Terraform installation to cooperate.
+
+First, if you haven't done so yet, [install Terraform](https://developer.hashicorp.com/terraform/downloads). At least on Linux, the process is quite simple: add Hashicorp's APT repo, then install Terraform. To verify that you have it, run `terraform --version`.
+
+Then, create a `.terraformrc` file in the home directory:
+
+```
+// /home/reyes/.terraformrc
+
+provider_installation {
+  dev_overrides {
+      "jreyesr/firefly" = "/home/reyes/go/bin"
+  }
+
+  direct {}
+}
+```
+
+If using another OS, see [this section of the docs](https://developer.hashicorp.com/terraform/tutorials/providers-plugin-framework/providers-plugin-framework-provider#prepare-terraform-for-local-provider-install).
+
+Then, we can compile and install the plugin with `go install .` on the main folder of the provider. This will place it in the `~/go/bin` path, from where Terraform will be able to pick it up. To verify that it was installed, run `ls ~/go/bin`; it should list the provider:
+
+```sh
+❯ ls ~/go/bin
+  go            gofmt        staticcheck                 
+  go-outline    goimports    terraform-provider-firefly  
+```
+
+Then, on an isolated folder (maybe in your home directory?), create a new directory to hold Terraform files. In there, create a `main.tf` file:
+
+```hcl
+# main.go
+
+terraform {
+  required_providers {
+    firefly = {
+      source = "jreyesr/firefly"
+    }
+  }
+}
+
+provider "firefly" {
+  endpoint      = "http://localhost:8080"
+  access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0MTEiLCJqdGkiOiJhM2RhZTAwZTFiNDVmZWUyZDRjOTJlY2E5M2U4ZmVjNzk5ZDMxODE1MmUwMGI4YTBkZmIzZTczYjY1NGE0NzQxMmIzNzdkMDRlMDU5NDhmMSIsImlhdCI6MTY4NjAxNjEzMy42NTkyMjEsIm5iZiI6MTY4NjAxNjEzMy42NTkyMjMsImV4cCI6MTcxNzYzODUzMy41MTM3MjUsInN1YiI6IjEiLCJzY29wZXMiOltdfQ..."
+}
+
+data "firefly_sysinfo" "sysinfo" {}
+
+output "sysinfo" {
+  value = data.firefly_sysinfo.sysinfo
+}
+```
+
+Then, open a terminal on that folder, and run `terraform plan`. You may need to run `terraform init` first, in the home directory, if you have just installed Terraform.
+
+The `plan` command should output something like this:
+
+```
+╷
+│ Warning: Provider development overrides are in effect
+│ 
+│ The following provider development overrides are set in the CLI configuration:
+│  - jreyesr/firefly in /home/reyes/go/bin
+│ 
+│ The behavior may therefore not match any released version of the provider and applying changes may cause the state to become incompatible with published releases.
+╵
+data.firefly_sysinfo.sysinfo: Reading...
+data.firefly_sysinfo.sysinfo: Read complete after 0s
+
+Changes to Outputs:
+  + sysinfo = {
+      + api_version = "2.0.1"
+      + driver      = "mysql"
+      + os          = "Linux"
+      + php_version = "8.2.5"
+      + version     = "6.0.10"
+    }
+
+You can apply this plan to save these new output values to the Terraform state, without changing any real infrastructure.
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
+```
+
+Since we are not declaring any resources (we have none yet!), the planning stage detects no changes and thus exists. Since we used the results of the sysinfo data source in an `output` block, Terraform prints it out. Outputs are used, for example, when provisioning cloud infrastructure to print the IDs that the cloud provider assigns to the recently-created servers, since that data is not known until the servers are actually created.
+
+The output captures the response of the Firefly API, thus demonstrating that the data source is working correctly.
+
+**Author's note:** I decided to split this article here. We still are missing what is arguably the most important part of a Provider, the Resources that can be configured, but this article is already running quite long. I'm already working on the Resources, so stay tuned!
+
+## (Partial) Recap
+
+What have we learned until now?
+
+* Services with an API can be managed imperatively (i.e., sending commands to create, edit or delete resources) or declaratively (i.e., having some sort of "desired state" and leaving the task of making the actual service equal to the desired state to some tool)
+* Both approaches are perfectly serviceable, and sometimes one or the other is a better fit
+* There has been a huge push in recent(ish) times towards the declarative approach in the area of cloud computing, both from the lower layers of the stack (i.e. infrastructure management) in the form of Terraform and similar tools, and from the higher layers (i.e. applications) in the form of Kubernetes
+* Terraform, while focused in the domain of cloud infrastructure provisioning and configuration, can also be pressed into service for configuring mostly arbitrary REST APIs
+* The Terraform mental model consists of:
+	* Providers, which are created for each remote service/website/SaaS that someone wants to control declaratively
+	* Resources, which are the actual objects that people want to manage: repos, users, issues and branches in Github; servers, disks, networks in AWS, customers, tickets and comments in Zendesk; interfaces and policies in a firewall
+	* Data sources, which are read-only views of live data in the remote service
+* Terraform manages infrastructure (and other things!) in the following stages:
+	1. Someone writes a Terraform file (or a set of them) _declaring_ how the resources should look like: for example, if managing AWS, the servers, disks and networks are listed
+	2. The file is _applied_, which makes Terraform query the remote system (e.g. AWS) for its current state, compare it with the desired state (as expressed by the user in the Terraform file) and obtain a minimum diff
+	3. The diff is applied to the remote system
+	4. (Hopefully) The remote system is now in a configuration that matches what the user described in the Terraform file
+* Each Provider can have some configuration, which commonly holds the credentials necessary to authenticate to the API
+* Writing a Data Source only requires implementing one function, which should call the remote API and then fill a struct with the data returned (said struct type must have been declared previously, of course)
