@@ -5,6 +5,7 @@ draft: false
 summary: This article presents a plugin for [Steampipe](https://steampipe.io) that allows you to query the Bitcoin network for information about wallets and transactions. It also covers some gotchas found while developing such a plugin.
 tags: ['steampipe', 'open-source', 'bitcoin']
 categories: ['go', 'sql']
+toc: true
 ---
 
 In this post, we'll cover the development of a [Steampipe](https://steampipe.io) plugin that provides information about Bitcoin wallets and transactions. For a wallet, you'll be able to get its current balance, the number of transactions that it has participated in, and its total cash flow (both incoming and outgoing). You'll additionally be able to list all transactions that involved a specific wallet. For a specific transaction, you'll be able to see its date, amount, fee and the wallets that participated in it.

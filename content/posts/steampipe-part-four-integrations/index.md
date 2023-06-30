@@ -4,6 +4,7 @@ date: 2023-04-16T20:41:18-05:00
 draft: false
 tags: ['steampipe', 'open-source']
 categories: ['go', 'sql']
+toc: true
 ---
 
 This article explores some advanced integration usecases in which Steampipe can be used, such as placing another Postgres instance in fron of it for greater control and more data sources.

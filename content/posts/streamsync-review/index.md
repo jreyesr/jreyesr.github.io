@@ -4,6 +4,7 @@ date: 2023-06-15T20:17:15.000-05:00
 summary: "In this article, we'll review Streamsync, a (young) framework that lets you create interactive web applications backed by Python code. We'll compare it with some desktop UI frameworks, and also with Streamlit, and with other low-code UI development tools"
 tags: ['low-code', 'toolbox']
 categories: ['python']
+toc: true
 ---
 
 In this article, we'll review [Streamsync](https://www.streamsync.cloud/), a (young) framework that lets you create interactive web applications backed by Python code. We'll compare it with some desktop UI frameworks, and also with Streamlit, which has been [specifically called out by Streamsync's author](https://www.reddit.com/r/Python/comments/135i584/streamsync_ui_editor_python/) as both an inspiration and a... competitor? alternative? Whatever, it's all in good fun.

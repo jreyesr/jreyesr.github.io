@@ -5,6 +5,7 @@ draft: false
 summary: In which we introduce and describe an Insomnia plugin that can repeatedly send a request, varying arbitrary parts of it with data taken from a CSV file, and also extract response data and save it to the aforementioned CSV file.
 tags: ["rest", "insomnia", "open-source", "new-project", "announcements"]
 categories: ["react", "nodejs", "http"]
+toc: true
 ---
 
 ## TL;DR

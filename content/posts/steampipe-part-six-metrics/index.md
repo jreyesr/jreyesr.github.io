@@ -5,6 +5,7 @@ summary: "In this article, we explore the traces&metrics functionality implement
 tags: ['steampipe', 'open-source', 'observability', 'opentelemetry']
 categories: ['go', 'sql']
 favorite: true
+toc: true
 ---
 
 In this article, we'll cover the ~~ancient~~new forgotten knowledge of [distributed tracing](https://medium.com/jaegertracing/jaeger-tracing-a-friendly-guide-for-beginners-7b53a4a568ca) and [metrics](https://opentelemetry.io/docs/concepts/signals/metrics/), as applied to [Steampipe](https://steampipe.io/). We'll see the kinds of data that is natively exposed by a Steampipe instance, how to collect and view it and why you'd want to collect it. Then, we'll expose our own data from plugins. This latter part has never before seen the light of day and Internet exposure, as far as I could find.

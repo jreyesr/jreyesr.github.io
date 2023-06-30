@@ -6,6 +6,7 @@ summary: "This article presents a way of extracting information from a time-trac
 tags: ['reverse-engineering', 'time-tracking']
 categories: ['frida', 'python', 'c', 'sqlite']
 favorite: true
+toc: true
 ---
 
 ## Introduction, Or, Why This?

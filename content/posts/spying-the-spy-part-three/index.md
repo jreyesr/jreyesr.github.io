@@ -4,6 +4,7 @@ date: 2023-03-24T20:18:52-05:00
 summary: "In the final article of this series, we extract TLS-protected messages from a time-tracking application, using both a TLS-intercepting proxy and Frida."
 tags: ['reverse-engineering', 'time-tracking', 'mitm']
 categories: ['frida', 'python', 'polarproxy']
+toc: true
 ---
 
 ## Introduction

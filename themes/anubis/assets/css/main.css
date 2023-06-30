@@ -291,6 +291,11 @@ main h1 {
     display: inline;
 }
 
+.post-header header h1 {
+    display: block;
+}
+
+
 .post-navigation {
     background: var(--nav-bg-color);
     text-align: center;

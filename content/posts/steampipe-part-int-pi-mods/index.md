@@ -5,6 +5,7 @@ draft: false
 summary: "This article continues work on the Bitcoin plugin, by adding automatic retries and exploring the contents of mods: Controls, Benchmarks and Dashboards. It also presents an enhancement to the dashboard charts, to enable them to understand time-based data."
 tags: ['steampipe', 'open-source', 'bitcoin', 'dataviz']
 categories: ['go', 'sql', 'react', 'typescript']
+toc: true
 ---
 
 Hello again! In the [previous post](https://jreyesr.github.io/posts/steampipe-part-dos-bitcoin/), we built a Steampipe plugin to interface with a Bitcoin information API, which exposed data about wallets (balance, flows in/out, number of transactions) and transactions (amount, wallets involved, time, fee). We covered how to implement search by delegating it to the remote server, how to navigate paginated APIs by repeatedly calling them until they stop returning data, and tips for creating your own API client in Go when no such package exists.

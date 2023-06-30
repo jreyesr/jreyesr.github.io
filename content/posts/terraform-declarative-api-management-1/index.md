@@ -4,6 +4,7 @@ date: 2023-06-02T20:06:15.000-05:00
 summary: "This article explores the usage of Terraform as applied to the problem of configuring generic APIs (i.e., those not related to cloud infrastructure). The motivation is to declaratively control APIs that only expose an imperative interface (such as essentially any REST-ish API)"
 tags: ['experiments', 'iac', 'rest']
 categories: ['terraform']
+toc: true
 ---
 
 TL;DR: How can we take a random REST API and make it declarative? In other words, instead of sending a POST request to create a third Widget called Great Widget, you *declare* that the application should now three Widgets, the third one being called Great Widget. _Something_ should then take your desired state (three Widgets), compare it with the current state (two Widgets), figure out that the first two Widgets are unchanged and there's a new one, and then issue a create command for the new Widget. Once said Widget is created, its hunger for order and equality will be satisfied, and it should go back to sleep since the desired state matches the current state... until such time as something changes (either you change the desired state, or someone or something changes the actual state), at which point it should wake up, drive the actual state to match the desired state (never the opposite! Things don't work that way!), and then go back to sleep, and so on. Forever.

@@ -4,6 +4,7 @@ date: 2023-03-22T09:30:40-05:00
 summary: "In this article we process the logs that we extracted from a time-tracking application, and we explore Gravwell's facilities for extracting insights from those logs."
 tags: ['reverse-engineering', 'time-tracking']
 categories: ['frida', 'python', 'c', 'sqlite']
+toc: true
 ---
 
 ## Introduction

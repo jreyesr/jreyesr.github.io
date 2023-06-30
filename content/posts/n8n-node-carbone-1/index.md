@@ -4,6 +4,7 @@ date: 2023-05-27T20:37:42.000-05:00
 summary: "In this article, we create a new N8N node that integrates the Carbone open-source library to render Word documents from templates"
 tags: ['open-source', 'templating', 'new-project', 'announcements']
 categories: ['nodejs', 'carbone', 'n8n']
+toc: false
 ---
 
 TL;DR: We've developed and published a custom node (two, actually) for the [N8N](https://n8n.io/) workflow automation tool, which adds the capability to generate DOCX documents from a template and some variable data:

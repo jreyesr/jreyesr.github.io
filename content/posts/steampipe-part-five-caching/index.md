@@ -3,11 +3,10 @@ title: "Steampipe, Part Five: Caching"
 date: 2023-04-19T20:36:23-05:00
 tags: ['steampipe', 'open-source']
 categories: ['go', 'sql']
+toc: true
 ---
 
 In this short article, we'll explore the caching facilities available to a [Steampipe](https://steampipe.io/) plugin.
-
-<!--more-->
 
 <!--more-->
 
