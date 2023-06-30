@@ -751,3 +751,28 @@ ul.language-select > li, ul.footer-menu > li {
     z-index: 1;
   }
 {{ end }}
+
+aside {
+  width: 30%;
+  padding: 15px 10px 15px 15px;
+  margin-left: 10px;
+  float: right;
+  background-color: lightgray;
+  font-size: 0.9em;
+}
+
+aside h2 {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+aside ul {
+  list-style: none;
+  padding-inline-start: 20px;
+}
+
+/* Override for the first level of items, we don't want them indented at all */
+aside > nav > ul {
+  padding-inline-start: 0px;
+}
+
