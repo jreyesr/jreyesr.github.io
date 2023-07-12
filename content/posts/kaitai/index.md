@@ -3,6 +3,7 @@ title: "A test drive of Kaitai Struct"
 date: 2023-07-11T21:21:41.000-05:00
 summary: "In this article we explore Kaitai, a parser for binary file formats."
 tags: ['toolbox', 'parsers', 'reverse-engineering']
+toc: true
 ---
 
 This is [a SQLite database](https://github.com/lerocha/chinook-database):
