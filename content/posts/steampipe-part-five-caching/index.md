@@ -194,7 +194,7 @@ Hidden deep in the bowels of Steampipe, lurks a second cache. It's only spoken o
 
 Okay, it's not called that. It's not called anything. It's not in the docs (that I could find). You only find it by looking through some plugins or in code autocompletion.
 
-This is a cache that you can use from plugin code. For whatever you want. The [Shodan plugin](https://github.com/turbot/steampipe-plugin-shodan/blob/5ea0be4f3b49483bb8f61f008a2129f1d1fd3e42/shodan/utils.go#L19) uses it to cache an API client struct, so as not to recreate it every time. This is because [the Shodan library](github.com/shadowscatcher/shodan) that the plugin uses has some internal rate limiting (one request per second), as can be seen at the end of the README. This is to comply with Shodan's terms of service. If a new client were created every time, no such throttling could be applied, since every client would know nothing about previous requests. Thus, the Shodan plugin reuses a single client.
+This is a cache that you can use from plugin code. For whatever you want. The [Shodan plugin](https://github.com/turbot/steampipe-plugin-shodan/blob/5ea0be4f3b49483bb8f61f008a2129f1d1fd3e42/shodan/utils.go#L19) uses it to cache an API client struct, so as not to recreate it every time. This is because [the Shodan library](https://github.com/shadowscatcher/shodan) that the plugin uses has some internal rate limiting (one request per second), as can be seen at the end of the README. This is to comply with Shodan's terms of service. If a new client were created every time, no such throttling could be applied, since every client would know nothing about previous requests. Thus, the Shodan plugin reuses a single client.
 
 What else could a plugin cache be used for?
 
@@ -206,7 +206,7 @@ What else could a plugin cache be used for?
 
 ### Usage
 
-Side note: The Steampipe plugin cache is powered by [eko/gocache](github.com/eko/gocache), so refer to that package for more detailed docs.
+Side note: The Steampipe plugin cache is powered by [eko/gocache](https://github.com/eko/gocache), so refer to that package for more detailed docs.
 
 ```go
 func myHydrateFunc(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
