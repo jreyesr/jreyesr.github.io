@@ -10,3 +10,15 @@
     debug: false, // Set debug to true if you want to inspect the modal
   });
 </script>
+
+<!-- medium-zoom (zoom images on click, à la Medium) -->
+<!-- https://github.com/francoischalifour/medium-zoom#usage -->
+<!-- needs the event listener because the actual plugin script is deferred -->
+<script type="text/javascript">
+    window.addEventListener('DOMContentLoaded', function() {
+        mediumZoom('img', {
+          margin: 24,
+        });
+    });
+</script>
+
