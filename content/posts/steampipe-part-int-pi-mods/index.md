@@ -5,6 +5,7 @@ draft: false
 summary: "This article continues work on the Bitcoin plugin, by adding automatic retries and exploring the contents of mods: Controls, Benchmarks and Dashboards. It also presents an enhancement to the dashboard charts, to enable them to understand time-based data."
 tags: ['steampipe', 'open-source', 'bitcoin', 'dataviz']
 categories: ['go', 'sql', 'react', 'typescript']
+series: ['steampipe']
 toc: true
 ---
 

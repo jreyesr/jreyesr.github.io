@@ -4,6 +4,7 @@ date: 2023-04-30T21:04:03-05:00
 summary: "In this article, we introduce an application to design, test, run and monitor Telegram chatbots."
 tags: ['open-source', 'new-project', 'telegram', 'chatbots', 'announcements']
 categories: ['react', 'nextjs']
+series: ['openchatflow']
 favorite: true
 ---
 

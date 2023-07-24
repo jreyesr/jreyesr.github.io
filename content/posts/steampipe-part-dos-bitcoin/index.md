@@ -5,6 +5,7 @@ draft: false
 summary: This article presents a plugin for [Steampipe](https://steampipe.io) that allows you to query the Bitcoin network for information about wallets and transactions. It also covers some gotchas found while developing such a plugin.
 tags: ['steampipe', 'open-source', 'bitcoin']
 categories: ['go', 'sql']
+series: ['steampipe']
 toc: true
 ---
 

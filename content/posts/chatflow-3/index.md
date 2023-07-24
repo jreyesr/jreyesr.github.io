@@ -4,6 +4,7 @@ date: 2023-05-13T09:44:34-05:00
 summary: "In this devlog, we add several new nodes, the UI necessary to add nodes to the canvas, and we implement new types of nodes: async actions that run in the background and multiple-output nodes that route the conversation through different paths."
 tags: ['open-source', 'telegram', 'chatbots']
 categories: ['nextjs', 'tailwind', 'reactflow']
+series: ['openchatflow']
 ---
 
 This devlog covers up to [commit `a10c123`](https://github.com/jreyesr/openchatflow/commit/a10c123d93f06d42c5338d1a80e4d3a222f50f7b). This is how the UI looks at this point:

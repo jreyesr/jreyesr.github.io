@@ -16,8 +16,16 @@
 
                 {{ partial "post-language-switcher.html" . }}
             </header>
-
+            
+            <div>
             <small>Published on {{ .Params.date.Format "2006-01-02T15:04" }}</small>
+            </div>
+            
+            {{ range .Params.series }}
+            <div>
+            <small>This post is part of a series: <a href="/series/{{ . }}">{{ . }}</a></small>
+            </div>
+            {{ end }}
         </div>
         
         {{ if and (gt .WordCount 400 ) (.Params.toc) }}

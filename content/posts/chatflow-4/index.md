@@ -4,6 +4,7 @@ date: 2023-05-18T20:41:04.000-05:00
 summary: "In this devlog, we add more nodes, and present a first version of the application, deployed to Vercel"
 tags: ['open-source', 'telegram', 'chatbots']
 categories: ['nextjs', 'tailwind', 'reactflow']
+series: ['openchatflow']
 ---
 
 The app is now live on Vercel! Check the editor out on <https://openchatflow.vercel.app/design>

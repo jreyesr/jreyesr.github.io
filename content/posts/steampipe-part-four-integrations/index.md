@@ -4,6 +4,7 @@ date: 2023-04-16T20:41:18-05:00
 draft: false
 tags: ['steampipe', 'open-source']
 categories: ['go', 'sql']
+series: ['steampipe']
 toc: true
 ---
 

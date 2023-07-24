@@ -11,7 +11,16 @@
     <a class="post-hidden-url u-url" href="{{ .Permalink }}">{{ .Permalink }}</a>
     <a href="{{ .Site.BaseURL }}" class="p-name p-author post-hidden-author h-card" rel="me">{{ .Params.author | default .Site.Params.author }}</a>
 
-
+    {{ if .Params.series }}
+        <div class="post-series">
+            <ul class="post-series">
+                {{ range $series_name := .Params.series }}
+                    {{ $series := ($.Site.GetPage (printf "/series/%s" $series_name)) }}
+                    <li><a href="{{ $series.Permalink }}">Series: {{ $series.Name | default $series_name }}</a></li>
+                {{ end }}
+            </ul>
+        </div>
+    {{ end }}
     <div class="post-taxonomies">
         {{ if .Params.categories }}
             <ul class="post-categories">
@@ -20,14 +29,14 @@
                     <li><a href="{{ $cat.Permalink }}">{{ $cat.Title | default $cat_name }}</a></li>
                 {{ end }}
             </ul>
-            {{ end }}
-            {{ if .Params.tags }}
-                <ul class="post-tags">
-                    {{ range $tag_name := .Params.tags }}
-                        {{ $tag := ($.Site.GetPage (printf "/tags/%s" $tag_name)) }}
-                        <li><a href="{{ $tag.Permalink }}">#{{ $tag.Title | default $tag_name }}</a></li>
-                    {{ end }}
-                </ul>
+        {{ end }}
+        {{ if .Params.tags }}
+            <ul class="post-tags">
+                {{ range $tag_name := .Params.tags }}
+                    {{ $tag := ($.Site.GetPage (printf "/tags/%s" $tag_name)) }}
+                    <li><a href="{{ $tag.Permalink }}">#{{ $tag.Title | default $tag_name }}</a></li>
+                {{ end }}
+            </ul>
         {{ end }}
     </div>
 </div>

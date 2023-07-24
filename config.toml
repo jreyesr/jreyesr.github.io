@@ -3,6 +3,11 @@ languageCode = 'en-us'
 title = '''jreyesr's blog'''
 theme = 'anubis'
 
+[taxonomies]
+  category = 'categories'
+  series = 'series'
+  tag = 'tags'
+
 [params]
 author = 'jreyesr'
 style = 'auto'

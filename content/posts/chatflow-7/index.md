@@ -4,6 +4,7 @@ date: 2023-07-23T22:03:39.000-05:00
 summary: "In this devlog, we cover the implementation of a listener that can react to Telegram's webhooks, which are sent when a bot receives a message from the user (among other events)"
 tags: ['open-source', 'telegram', 'webhooks']
 categories: ['nextjs']
+series: ['openchatflow']
 toc: true
 ---
 

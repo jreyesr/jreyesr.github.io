@@ -4,6 +4,7 @@ date: 2023-05-25T20:40:39.000-05:00
 summary: "In this devlog, we explore the observability capabilities that are provided by NextJS, and we instrument the OpenChatflow application."
 tags: ['open-source', 'telegram', 'observability', 'opentelemetry']
 categories: ['nextjs']
+series: ['openchatflow']
 ---
 
 The app is now live on Vercel! Check the editor out on <https://openchatflow.vercel.app/design>

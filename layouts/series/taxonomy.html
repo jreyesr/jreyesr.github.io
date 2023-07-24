@@ -1,0 +1,22 @@
+{{ define "main" }}
+    <h1>Posts in series {{ .Params.Name }}</h1>
+    
+    <div>
+        <small>
+            {{ .Params.Description }}
+        </small>
+    </div>
+    
+    <div>
+    {{ with .Params.Link }}
+        <a href="{{ . }}">{{ . }}</a>
+    {{ end }}
+    </div>
+
+    {{ $pages := where .Pages "Params.hidden" "!=" true }}
+    {{ range (.Paginate $pages).Pages }}
+        {{ partial "post-summary.html" . }}
+    {{ end }}
+    {{ partial "pagination.html" . }}
+
+{{ end }}

@@ -5,6 +5,7 @@ summary: "In this article, we explore the traces&metrics functionality implement
 tags: ['steampipe', 'open-source', 'observability', 'opentelemetry']
 categories: ['go', 'sql']
 favorite: true
+series: ['steampipe']
 toc: true
 ---
 

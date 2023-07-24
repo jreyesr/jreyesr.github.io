@@ -5,6 +5,7 @@ draft: false
 summary: "This article presents a way of extracting information from a time-tracking and activity monitoring application, by hooking its calls to the SQLite library with Frida."
 tags: ['reverse-engineering', 'time-tracking']
 categories: ['frida', 'python', 'c', 'sqlite']
+series: ['timedoctor-re']
 favorite: true
 toc: true
 ---

@@ -4,6 +4,7 @@ date: 2023-05-06T20:49:33-05:00
 summary: "In this devlog, we cover the setup of a NextJS project, creating custom nodes in Reactflow, adding a configuration dialog to one node, edge validation so that only certain node connections are allowed, and more!"
 tags: ['open-source', 'telegram', 'chatbots']
 categories: ['nextjs', 'tailwind', 'reactflow']
+series: ['openchatflow']
 ---
 
 This devlog covers up to [commit `de6ce2e`](https://github.com/jreyesr/openchatflow/commit/de6ce2e654fd40ac09097e85db75699be8c659af). This is how the UI looks at this point:

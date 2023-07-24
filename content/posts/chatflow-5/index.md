@@ -4,6 +4,7 @@ date: 2023-05-22T22:07:21.000-05:00
 summary: "In this devlog, we integrate a real DB (PostgreSQL with the Prisma ORM) with the OpenChatflow application, so that we can create, read and save conversations."
 tags: ['open-source', 'telegram', 'chatbots']
 categories: ['nextjs', 'tailwind', 'reactflow']
+series: ['openchatflow']
 ---
 
 The app is now live on Vercel! Check the editor out on <https://openchatflow.vercel.app/design>

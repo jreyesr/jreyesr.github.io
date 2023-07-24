@@ -4,6 +4,7 @@ date: 2023-07-16T22:21:20.000-05:00
 summary: "In this devlog, we explore XState, a state-machine library for Javascript. We present the basics of state machines, what they are useful for, and how they could pertain to the OpenChatflow application. We also implement a first cut of a translation layer to convert OpenChatflow conversations to an executable format"
 tags: ['open-source', 'telegram', 'state-mgmt']
 categories: ['nextjs', 'xstate']
+series: ['openchatflow']
 toc: true
 ---
 
