@@ -620,6 +620,14 @@ import httpx # This is sometimes pulled in by FastAPI
 load_dotenv()  # now the contents of .env are available on os.environ/os.getenv
 client = httpx.Client(base_url=os.environ["API_URL"]) # Could also add auth details here, if they existed!
 
+def action_clicked(state, payload, context):
+    current_user = context["item"]
+    print(current_user)
+    print("Toggling user", current_user["id"])
+    # Call the REST API
+    
+    get_all_users() # Refresh the users, if the REST API worked...
+
 def get_all_users() -> list[dict[str, Any]]:
     """Fetches all users from the remote API"""
     return client.get("/").json()
@@ -639,16 +647,21 @@ The header is a manually-created Column, which is outside the Repeater. The acti
 A couple of things to note:
 
 * I tried to make the user's status be a nice icon, instead of just `true`/`false`, by adding two Image components to the second-to-last column, and setting [conditional visibility](https://www.streamsync.cloud/builder-basics.html#visibility) on them. However, that didn't work, and I'm not really sure why. Setting breakpoints on the (compiled) Vue code points to a bug, since the context is `undefined`... which it shouldn't be
-* The buttons don't work. We can hook up a handler function to them alright, and link it to the `click` event, but click events on buttons have no payload and thus there is no way of detecting (in the BE) which of the buttons was clicked, hence no way of detecting which user's status should be toggled, and to what (active or inactive). And I'm not sure what could be changed to make it work. We would need a way to provide arbitrary parameters to event handlers, which could access the current context (to work inside Repeaters). Ideally, the handler function should get access to the `@{item}` variable, since that's where the user's data is.
+* **No longer valid, see just below** ~~The buttons don't work. We can hook up a handler function to them alright, and link it to the `click` event, but click events on buttons have no payload and thus there is no way of detecting (in the BE) which of the buttons was clicked, hence no way of detecting which user's status should be toggled, and to what (active or inactive). And I'm not sure what could be changed to make it work. We would need a way to provide arbitrary parameters to event handlers, which could access the current context (to work inside Repeaters). Ideally, the handler function should get access to the `@{item}` variable, since that's where the user's data is.~~
+* **UPDATE 2023-07-25**: Initially I didn't find a way to access the per-iteration context, so as to make the buttons block/unblock the user to which they belong. Turns out I'm blind. [Event handlers that run from a Repeater get access to a `context` parameter which holds the item that existed in that iteration of the Repeater](https://www.streamsync.cloud/repeater.html#event-context). This means that you can make all the Buttons point to the same `action_clicked` handler, and inside of the handler you know:
+    * that you're toggling a user's state, because you are in that specific function handler
+    * the user for whom you're toggling the state, by reading it from `context["item"]`
+    
+    That should be enough for you to perform whatever action you need to perform on that specific item. This is very good, since it lets Streamsync implement those typical CRUD-y UIs where you have several records on which you want to perform actions. For example, a typical Retool example is a table with user orders (assume you have an e-commerce site), and the application would let a service representative refund an order, by clicking a "Refund" button beside that order. By leveraging the `context` parameter, Streamsync can suport those kinds of UI.
 
-Observations: For this specific usecase, Streamsync has been found quite lacking. Repeaters are a really nice idea, but accessing the per-item context is simply not possible in the BE, hence there's no way to perform actions on a single item. The really basic table component I'm not counting, since the author is aware of it and working to add more functionality to it.
+Observations: ~~For this specific usecase, Streamsync has been found quite lacking. Repeaters are a really nice idea, but accessing the per-item context is simply not possible in the BE, hence there's no way to perform actions on a single item.~~ Streamsync is capable of passing the iterator variable to event handlers that are triggered from components that are wrapped in Repeaters, which lets you perform actions (such as button clicks) that are scoped to a single resource in the repeater. The really basic table component I'm not counting as a negative, since the author is aware of it and working to add more functionality to it.
 
 ## Recap
 
 If you find yourself having to constantly develop small(ish) UIs, consider giving Streamsync a try. Especially if, for example:
 
 * Those UIs are mostly CRUD-y interfaces, which are usually not fun or challenging to write, yet take a lot of time
-* Those UIs are internal tools, where it's OK if the buttons' corner radius doesn't follow your strict brand guidelines. However, in this case, give it a really careful look before committing to using Streamsync, since you could then find yourself needing to do something which just isn't possible (see my last example above: there's no way to display a list of users, taken from an API, each with an action button that performs an action on _that specific_ user)
+* Those UIs are internal tools, where it's OK if the buttons' corner radius doesn't follow your strict brand guidelines. ~~However, in this case, give it a really careful look before committing to using Streamsync, since you could then find yourself needing to do something which just isn't possible (see my last example above: there's no way to display a list of users, taken from an API, each with an action button that performs an action on _that specific_ user)~~
 * Those UIs are for data apps (the canonical example is anything to do with [Pandas](https://pandas.pydata.org/), [Matplotlib](https://matplotlib.org/) or AI libraries like [Tensorflow](https://www.tensorflow.org/)). If you usually work with Jupyter notebooks, you know that they don't work well to present results in a simple-to-use web application. Consider using Streamsync or [Streamlit](https://streamlit.io/)
 * You have an already-working process in Python, which (say) runs on a schedule via Cron. Now (because of course they would) someone asks you for a way of triggering the automatic process on-demand, perhaps supplying some parameters. Kind of [FaaS/Lambda Functions](https://www.cloudflare.com/learning/serverless/glossary/function-as-a-service-faas/), AKA "microservices where the micro- part has been taken to the extreme", except instead of being triggered via POST calls, people want a nice UI to do it. Streamsync should be quite capable of providing you with a simple form with text fields and a Start button that calls a Python function, from which you can trigger whatever you'd usually do on script startup.
 
