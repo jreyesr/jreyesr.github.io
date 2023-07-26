@@ -607,7 +607,7 @@ So I suspect that's why Streamsync requires you to provide a dictionary: keys ar
 
 Now, having resolved that small matter, we can try to display the data that would normally go in a table: the user's name, email, blocked/unblocked status, and (since we can't rely on the selected item on a table to block/unblock the currently selected user) an action button for every user:
 
-![c1f558704115d3ff681c0a39e861d801.png](./_resources/c1f558704115d3ff681c0a39e861d801.png)
+![c1f558704115d3ff681c0a39e861d801.png](./_resources/usermgmt.png)
 
 ```py
 import os
@@ -633,7 +633,7 @@ def get_all_users() -> list[dict[str, Any]]:
     return client.get("/").json()
 
 def prepare_users(users: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
-    return {str(u["id"]): u | {"action": "Unblock" if u["blocked"] else "Block"} for u in users}
+    return {str(u["id"]): u | {"unblocked": not u["blocked"], "action": "Unblock" if u["blocked"] else "Block"} for u in users}
 
 
 # Initial state
@@ -646,7 +646,8 @@ The header is a manually-created Column, which is outside the Repeater. The acti
 
 A couple of things to note:
 
-* I tried to make the user's status be a nice icon, instead of just `true`/`false`, by adding two Image components to the second-to-last column, and setting [conditional visibility](https://www.streamsync.cloud/builder-basics.html#visibility) on them. However, that didn't work, and I'm not really sure why. Setting breakpoints on the (compiled) Vue code points to a bug, since the context is `undefined`... which it shouldn't be
+* ~~I tried to make the user's status be a nice icon, instead of just `true`/`false`, by adding two Image components to the second-to-last column, and setting [conditional visibility](https://www.streamsync.cloud/builder-basics.html#visibility) on them. However, that didn't work, and I'm not really sure why. Setting breakpoints on the (compiled) Vue code points to a bug, since the context is `undefined`... which it shouldn't be~~ As of [Streamsync v0.1.9](https://github.com/streamsync-cloud/streamsync/releases/tag/v0.1.9), we can make the user's status be a nice icon. The trick is to actually have _two_ Image components on the second-to-last column, one of a check mark and one of an X. Then, we assign them conditional visibilities: the check is visible if `item.blocked` and the X is visible if `item.unblocked`. Also, `unblocked` is manually set in the `prepare_users` function, in much the same way that the `action` is set to a text description of whether the user is blocked or not. Since `unblocked` is set to be the Boolean negation of `blocked`, only one of them will be visible at once, and thus we achieve the same effect as if the Image toggled its contents. See below:
+    ![](./_resources/condvis.png)
 * **No longer valid, see just below** ~~The buttons don't work. We can hook up a handler function to them alright, and link it to the `click` event, but click events on buttons have no payload and thus there is no way of detecting (in the BE) which of the buttons was clicked, hence no way of detecting which user's status should be toggled, and to what (active or inactive). And I'm not sure what could be changed to make it work. We would need a way to provide arbitrary parameters to event handlers, which could access the current context (to work inside Repeaters). Ideally, the handler function should get access to the `@{item}` variable, since that's where the user's data is.~~
 * **UPDATE 2023-07-25**: Initially I didn't find a way to access the per-iteration context, so as to make the buttons block/unblock the user to which they belong. Turns out I'm blind. [Event handlers that run from a Repeater get access to a `context` parameter which holds the item that existed in that iteration of the Repeater](https://www.streamsync.cloud/repeater.html#event-context). This means that you can make all the Buttons point to the same `action_clicked` handler, and inside of the handler you know:
     * that you're toggling a user's state, because you are in that specific function handler
