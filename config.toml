@@ -2,6 +2,7 @@ baseURL = 'http://example.org/'
 languageCode = 'en-us'
 title = '''jreyesr's blog'''
 theme = 'anubis'
+timeZone = "America/Guayaquil"
 
 [taxonomies]
   category = 'categories'
