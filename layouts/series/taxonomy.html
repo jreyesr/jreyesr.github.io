@@ -1,5 +1,16 @@
 {{ define "main" }}
-    <h1>Posts in series {{ .Params.Name }}</h1>
+    <h1>
+        Posts in series {{ .Params.Name }} 
+        {{ with .OutputFormats.Get "rss" -}}
+            <ul class="social-icons" style="display: inline;">
+                <li>
+                    <a {{ printf "href=%q" .Permalink | safeHTMLAttr }} title="RSS feed for the series" rel="me">
+                    {{ partial "font-awesome.html" (dict "iconName" "rss" "custom" false) }}
+                    </a>
+                </li>
+            </ul>
+        {{ end -}}
+    </h1>
     
     <div>
         <small>
