@@ -8,7 +8,7 @@ series: ['tfbridge']
 toc: true
 ---
 
-TL;DR: It's alive! It finally works. I've tested the plugin with the Terraform DNS provider, which can query DNS servers for records. Sure, this example isn't so exiciting, as there already exists [a perfectly nice `net` plugin for Steampipe](https://hub.steampipe.io/plugins/turbot/net), with [a table for making DNS lookups](https://hub.steampipe.io/plugins/turbot/net/tables/net_dns_record), but the DNS Terraform provider was a nice test subject.
+TL;DR: It's alive! It finally works. I've tested the plugin with the Terraform DNS provider, which can query DNS servers for records. Sure, this example isn't so exciting, as there already exists [a perfectly nice `net` plugin for Steampipe](https://hub.steampipe.io/plugins/turbot/net), with [a table for making DNS lookups](https://hub.steampipe.io/plugins/turbot/net/tables/net_dns_record), but the DNS Terraform provider was a nice test subject.
 
 ![1ae145396c8ab2faaa266b66c6c076bb.png](./_resources/1ae145396c8ab2faaa266b66c6c076bb.png)
 
