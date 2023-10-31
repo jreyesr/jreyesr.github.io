@@ -47,8 +47,8 @@
   {{ partial "resource.html" (dict "context" $ "type" "js" "filename" . ) }}
 {{- end }}
 
-{{ template "_internal/opengraph.html" . }}
-{{ template "_internal/twitter_cards.html" . }}
+{{/* {{ template "_internal/opengraph.html" . }} */}}
+{{/* {{ template "_internal/twitter_cards.html" . }} */}}
 
 {{ if isset .Site.Params "webmentions" }}
     {{ if isset .Site.Params.webmentions "login"  }}
