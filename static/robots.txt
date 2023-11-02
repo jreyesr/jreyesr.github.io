@@ -1,0 +1,19 @@
+User-agent: *
+Disallow: /
+
+# Search engines
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: Slurp # Yahoo, BTW
+User-agent: DuckDuckBot
+User-agent: Yandexbot
+
+User-agent: Applebot # Apple
+
+# Social networks
+User-agent: Linkedinbot
+User-agent: Twitterbot
+User-agent: FacebookExternalHit
+
+# Internet Archive
+User-agent: ia_archiver
