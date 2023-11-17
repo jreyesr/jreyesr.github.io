@@ -7,7 +7,7 @@ series: ["advanced-authz-patterns"]
 toc: true
 ---
 
-> **Author's note:** Hello! This article has become way, _way_ longer than I expected. At about 14K words, which takes a good fraction of an hour to read, I decided to split it. This is the first part, the second one will be [here](/posts/advanced-authz-2) (if it isn't yet, then that means you're reading this article soon after it's published and I haven't published the second part yet. Hi!). I expect to publish the second part in a couple of days or three.
+> **Author's note:** Hello! This article is split in two parts because it became too unwieldy for a single post. This is the first part, the second one [is here](/posts/advanced-authz-2).
 
 In this article, we'll take a look at access control patterns that can be used on web applications. We'll start from the role-based system that many web frameworks showcase in their tutorials, and build up from there all the way to Google-scale systems that are inspired by the one that powers Google Drive's authorization mechanics.
 
@@ -589,4 +589,4 @@ Thus concludes the first part of this series. It's gone on for long enough.
 
 However, we're not nearly done yet! Many more authorization systems await us in the next post. Among them are OpenFGA, Oso Cloud, OPA and Cerbos.
 
-The second post in the series will be [here](/posts/advanced-authz-2) (if it isn't yet, then that means you're reading this article soon after it's published and I haven't published the second part yet)
+The second post in the series [is here](/posts/advanced-authz-2).
