@@ -1,0 +1,7 @@
+repos:
+- repo: https://github.com/semgrep/semgrep
+  rev: 'SEMGREP_VERSION_LATEST'
+  hooks:
+    - id: semgrep
+      args: ['--config', 'semgrep_rules', '--error', '--skip-unknown-extensions']
+

@@ -1,0 +1,10 @@
+rules:
+  - id: todo
+    languages: [generic]
+    paths:
+      include: ["*.md"]
+    message: Clear this TODO before publishing
+    pattern-either:
+      - pattern-regex: '^TODO\N*$'
+      - pattern-regex: '^#+ TODO\N*$'
+    severity: ERROR

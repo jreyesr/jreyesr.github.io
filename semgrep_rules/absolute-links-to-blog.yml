@@ -1,0 +1,15 @@
+rules:
+  - id: absolute-links-to-blog
+    languages: [generic]
+    paths:
+      include: ["*.md"]
+    message: Link $...FULL_LINK is absolute. Replace it with a relative link so it works the same locally and on the online blog
+    patterns:
+      - pattern: "[...]($...FULL_LINK)"
+      - pattern-inside:
+          pattern-either:
+            - pattern: "[...](http://localhost:1313/$...LINK)"
+            - pattern: "[...](https://jreyesr.github.io/$...LINK)"
+      - focus-metavariable: $...FULL_LINK
+    fix: "/$...LINK"
+    severity: ERROR

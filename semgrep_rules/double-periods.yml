@@ -1,0 +1,12 @@
+rules:
+  - id: double-periods
+    languages: [generic]
+    paths:
+      include: ["*.md"]
+    message: Double periods aren't correct, delete one
+    patterns:
+      - pattern-regex: '[^.](?P<PERIODS>\.\.)(?!\.)'
+      - focus-metavariable: $PERIODS
+    severity: ERROR
+    fix: "."
+  

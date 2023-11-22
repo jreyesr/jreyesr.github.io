@@ -1,0 +1,13 @@
+rules:
+  - id: unreadable-alt
+    languages: [generic]
+    paths:
+      include: ["*.md"]
+    message: This image's alt attribute "$...ALT" isn't readable, write at least some words
+    patterns:
+      - pattern: "![$...ALT]($...ATTRS)"
+      - metavariable-analysis:
+          analyzer: entropy
+          metavariable: $...ALT
+    fix: "![some words describing the image]($...ATTRS)"
+    severity: ERROR

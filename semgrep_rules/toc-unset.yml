@@ -1,0 +1,11 @@
+rules:
+  - id: toc-unset
+    languages: [generic]
+    paths:
+      include: ["*.md"]
+    message: "This front matter doesn't contain `toc: true` or `toc: false`."
+    patterns:
+      - pattern: "---$...FRONTMATTER---"
+      - pattern-not-regex: "^toc: (true|false)$"
+    severity: ERROR
+    fix: "---$...FRONTMATTER\ntoc: true\n---"

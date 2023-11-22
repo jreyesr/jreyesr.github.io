@@ -1,0 +1,10 @@
+rules:
+  - id: typos
+    languages: [generic]
+    paths:
+      include: ["*.md"]
+    message: This word looks like a typo
+    pattern-regex: '\byu\b'
+    severity: ERROR
+    fix: you
+  

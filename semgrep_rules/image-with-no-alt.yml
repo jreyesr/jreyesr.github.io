@@ -1,0 +1,9 @@
+rules:
+  - id: image-with-no-alt
+    languages: [generic]
+    paths:
+      include: ["*.md"]
+    message: This image should have alt text
+    pattern: "![](...)"
+    severity: ERROR
+

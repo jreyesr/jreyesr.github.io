@@ -1,0 +1,8 @@
+rules:
+  - id: empty-links
+    languages: [generic]
+    paths:
+      include: ["*.md"]
+    message: Link doesn't have a target
+    pattern: "[...]()"
+    severity: ERROR

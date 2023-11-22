@@ -1,0 +1,12 @@
+rules:
+  - id: invalid-frontmatter-date
+    languages: [generic]
+    paths:
+      include: ["*.md"]
+    message: "Date $DATE on the front matter doesn't seem correct. Use plain ISO 8601 format"
+    patterns:
+      - pattern: "---...---"
+      - pattern-regex: '^date: (?P<DATE>\N*)$'
+      - pattern-not-regex: '\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}[+-]\d{2}:?\d{2}'
+      - focus-metavariable: $DATE
+    severity: ERROR
