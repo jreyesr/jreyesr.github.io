@@ -7,6 +7,6 @@ rules:
     patterns:
       - pattern: "---...---"
       - pattern-regex: '^date: (?P<DATE>\N*)$'
-      - pattern-not-regex: '\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}[+-]\d{2}:?\d{2}'
+      - pattern-not-regex: '\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d{3})?[+-]\d{2}:?\d{2}'
       - focus-metavariable: $DATE
     severity: ERROR

@@ -466,7 +466,7 @@ Then, there are inference rules. Here we have one: the grandfather of `a` is `b`
 
 Read that again, slowly, because it's the core of everything. Unlike your standard programming languages, Prolog and friends let you declare free variables (here `anyPerson`), and the runtime takes care of trying to find a value that satisfies all the conditions.
 
-![7714a780dd34b3673617acdd7e55dd95.png](./_resources/7714a780dd34b3673617acdd7e55dd95.png "This is something like what a logical evaluator would go through")
+![a diagram showing logical unification of the predicates above](./_resources/7714a780dd34b3673617acdd7e55dd95.png "This is something like what a logical evaluator would go through")
 
 Above is a graph showing an approximation of the rules that a logical evaluator would apply. From the original question (is there any value for `grandpa` that satisfies `grandfather("Asclepius", grandpa)`?), the evaluator expands it (via the `grandfather` rule definition) into two rules, which are joined by the common `anyPerson` variable. Since the first part of the rule is `father("Asclepius", anyPerson)` and we know, because of the knowledge base, that `father("Asclepius", "Apollo")`, we can deduce that if `anyPerson` has any value at all, it must be `"Apollo"`.
 

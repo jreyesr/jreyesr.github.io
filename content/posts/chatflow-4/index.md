@@ -5,13 +5,14 @@ summary: "In this devlog, we add more nodes, and present a first version of the 
 tags: ['open-source', 'telegram', 'chatbots']
 categories: ['nextjs', 'tailwind', 'reactflow']
 series: ['openchatflow']
+toc: false
 ---
 
 The app is now live on Vercel! Check the editor out on <https://openchatflow.vercel.app/design>
 
 This devlog covers up to [commit `0042b24`](https://github.com/jreyesr/openchatflow/commit/0042b240c25c6c5d3dacdc3a1f48ea93826b6c77). This is how the UI looks at this point:
 
-![6cf4468edd3159c26a1d0417df23f270.png](./_resources/6cf4468edd3159c26a1d0417df23f270.png)
+![a screenshot of the UI showing several conversation states](./_resources/6cf4468edd3159c26a1d0417df23f270.png)
 
 We have:
 
@@ -28,7 +29,7 @@ That node is very simple, and it has no hidden surprises. It's just a node with 
 
 With this new node, we can start building conversations that even *look* like they could be useful:
 
-![6fbe07b55604d7701863a255cef4395f.png](./_resources/6fbe07b55604d7701863a255cef4395f.png)
+![a conversation that has a command router and a node that asks the user](./_resources/6fbe07b55604d7701863a255cef4395f.png)
 
 ## The Note node
 
@@ -42,7 +43,7 @@ The Note node has almost nothing special, except for its `zValue` set to -1. Thi
 
 For notes, it's also useful to resize them. Reactflow does come with a [`NodeResizer` component](https://reactflow.dev/docs/api/nodes/node-resizer/) that helps in implementing resizable nodes. After some CSS magic so the drag handles always match the node's borders, we're left with this:
 
-![51964a8e6ca6186ea09f55e44634518a.png](./_resources/51964a8e6ca6186ea09f55e44634518a.png)
+![a conversation where a Note node is placed around a command router to explain it](./_resources/51964a8e6ca6186ea09f55e44634518a.png)
 
 The notes are placed from a new section in the Add button to the right. The note is the light blue block behind the Command Router node, which explains something about the node.
 
@@ -54,13 +55,13 @@ We may also want a node that prompts the user to choose something from a set of 
 
 From the editor's point of view, this node is almost the same as the Command node, since it has multiple outgoing handles, one for each option. Indeed, writing it was a matter of copying the Command node and changing a few variable names and text, plus adding another config entry for the prompt.
 
-![955d77fcdf9e89353b4cf16608b037e0.png](./_resources/955d77fcdf9e89353b4cf16608b037e0.png)
+![a conversation with a Choice node that has several outputs](./_resources/955d77fcdf9e89353b4cf16608b037e0.png)
 
 With text, command, prompt and choice nodes, there's enough foundation for many conversational interfaces. The choice node can also be used as a Confirmation node, by providing it with Yes/No options (indeed, that's the default configuration that is applied to new Choice nodes dragged from the node palette)
 
 Also, I just discovered that all nodes already support emoji, apparently!
 
-![c688e29ee8c80ea77284ef5b5c3ab0ed.png](./_resources/c688e29ee8c80ea77284ef5b5c3ab0ed.png)
+![a screenshot of Choice labels that include emoji, such as a green check mark for a Yes choice](./_resources/c688e29ee8c80ea77284ef5b5c3ab0ed.png)
 
 ## Deploying to Vercel
 
@@ -81,25 +82,25 @@ The process to deploy the application to Vercel was quite simple:
 
 Once all is done, [the PR](https://github.com/jreyesr/openchatflow/pull/1) will have a comment made by the Vercel bot, which links to the "preview deployment":
 
-![9ec8f79425e0418e75a9dfa5a2ac8fbd.png](./_resources/9ec8f79425e0418e75a9dfa5a2ac8fbd.png)
+![a comment in a Github PR made by the Vercel bot, which links to the preview deployment](./_resources/9ec8f79425e0418e75a9dfa5a2ac8fbd.png)
 
 Vercel creates an isolated deployment, which contains the result of building whatever code is in the branch. This deployment, thus, is its own instance of the application, and is assigned a unique URL. Two, in fact, one for the branch (which changes if you push another commit) and one that is tied to the commit and therefore never changes. The Vercel bot adds a comment that links to the branch URL.
 
 For example, see [this link](https://openchatflow-i2ipz6zr9-jreyesr.vercel.app/):
 
-![33aca9a06a04ff678fc5e4e0a50c2d8c.png](./_resources/33aca9a06a04ff678fc5e4e0a50c2d8c.png)
+![the application dashboard, which has a count of active, disabled and errored conversations, and a list of recent conversations](./_resources/33aca9a06a04ff678fc5e4e0a50c2d8c.png)
 
-![0cba3c2f5e8805d598ccf41b1940ee8d.png](./_resources/0cba3c2f5e8805d598ccf41b1940ee8d.png)
+![the application's editor for a single conversation](./_resources/0cba3c2f5e8805d598ccf41b1940ee8d.png)
 
 Not bad! It's a live, interactive version of the application. From here on, other people could poke around, use the application, [make comments](https://vercel.com/docs/workflow-collaboration/comments) (which would be reflected in the comment in the PR, as a count of "total comments" and "unresolved comments") and all-around test the application.
 
 When everything looks OK, we can merge the PR and update the main (i.e. Production) deployment:
 
-![3c43c6d40e56ed625ce2e1af055a7f02.png](./_resources/3c43c6d40e56ed625ce2e1af055a7f02.png)
+![Vercel's UI showing the OpenChatflow project main page](./_resources/3c43c6d40e56ed625ce2e1af055a7f02.png)
 
 And the app is now live [here](https://openchatflow.vercel.app/):
 
-![6cf4468edd3159c26a1d0417df23f270.png](./_resources/6cf4468edd3159c26a1d0417df23f270.png)
+![a screenshot of the application live on a Vercel URL](./_resources/6cf4468edd3159c26a1d0417df23f270.png)
 
 Have fun with it!
 

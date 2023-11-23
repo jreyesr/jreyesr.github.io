@@ -379,7 +379,9 @@ Also, that last mangled name looks just like those we found in the TimeDoctor ex
 * `R` for reference  
 * `K` for const  
 * `<basic_type>` for one of [C++ basic types](http://en.cppreference.com/w/cpp/language/types)  
-* `<function>` are encoded between `F`..`E`, return type of the function is encoded before parameters  
+// nosemgrep: semgrep_rules.double-periods
+* `<function>` are encoded between `F`..`E`, return type of the function is encoded before parameters
+// nosemgrep: semgrep_rules.double-periods
 * `<user_type>` are encoded between `N`..`E` when nested (TODO add definition) and describe the whole hierarchy of types.
 
 eg. `void foo()` is mangled as `_Z3foov`:  
@@ -390,7 +392,8 @@ eg. `void foo()` is mangled as `_Z3foov`:
 
 So, back to our function call, `_ZN15QNetworkRequest21setHttp2ConfigurationERK19QHttp2Configuration`.  
 
-* `_Z` is a constant prefix.  
+* `_Z` is a constant prefix.
+// nosemgrep: semgrep_rules.double-periods
 * `N..E` is a user type:  
   * `15QNetworkRequest` is the class  
   * `21setHttp2Configuration` is the function  
@@ -575,7 +578,8 @@ Also, that was nasty! It took me several hours to get it working. The main issue
 
 The code above is fairly complex and does 4 function calls in a chain. Let's unpack them to see how they work.
 
-* PART 0: We're working in the interceptor for `QNetworkAccessManager::get(QNetworkRequest)`. As we covered before, `args[0]` is a pointer to the `QNetworkAccessManager` instance itself (i.e., `this` in the C++ code). We won't use it anymore. `args[1]` is the first parameter to the call, i.e. a pointer to a `QNetworkRequest`. That gets saved into the `qnetworkrequest_ptr` constant.  
+* PART 0: We're working in the interceptor for `QNetworkAccessManager::get(QNetworkRequest)`. As we covered before, `args[0]` is a pointer to the `QNetworkAccessManager` instance itself (i.e., `this` in the C++ code). We won't use it anymore. `args[1]` is the first parameter to the call, i.e. a pointer to a `QNetworkRequest`. That gets saved into the `qnetworkrequest_ptr` constant.
+// nosemgrep: semgrep_rules.double-periods
 * PART 1: `QNetworkRequest` has a function `QUrl QNetworkRequest::url() const`. We need to call that, to extract the URL that this request is all about. We can obtain the function's mangled name according to the rules: `_Z` is constant, `N..E` because it's namespaced, inside the `N..E` we put `K` because it's `const`, `15QNetworkRequest` for the namespace and `3url` for the name, and it takes no arguments (`void`) so it gets a `v`. In total, that's `_ZNK15QNetworkRequest3urlEv`. So far, so good.  
 * However, then strikes a difference. Since the function takes no values (well, apart from its implicit `this` pointer) and returns a `QUrl`, we may expect it to be instantiated as `new NativeFunction(..., "pointer", ["pointer"])` in Frida. As a reminder, second arg is the return value, third arg is a list with the parameters. However, in the code we don't have that. We have `new NativeFunction(..., "void", ["pointer", "pointer"])`. What gives?  
 * I got this information from [this Github answer](https://github.com/frida/frida/issues/675#issuecomment-790948742) in the Frida repo and, once I knew where to look, somewhat buried in [Frida's docs for NativeFunction](https://frida.re/docs/javascript-api/#nativefunction). There, it says that "For C++ scenarios involving a return value that is larger than `Process.pointerSize`, a typical ABI may expect that a `NativePointer` to preallocated space must be passed in as the first parameter.".  

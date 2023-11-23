@@ -6,6 +6,7 @@ tags: ['open-source', 'new-project', 'telegram', 'chatbots', 'announcements']
 categories: ['react', 'nextjs']
 series: ['openchatflow']
 favorite: true
+toc: false
 ---
 
 This post introduces [OpenChatflow](https://github.com/jreyesr/openchatflow) (tentative name, subject to changes, yadda yadda), a new application to design, test, run and monitor Telegram chatbots.
