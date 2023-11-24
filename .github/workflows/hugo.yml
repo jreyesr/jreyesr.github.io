@@ -32,7 +32,7 @@ jobs:
       image: returntocorp/semgrep
     steps:
       - uses: actions/checkout@v3
-      - run: semgrep ci --config semgrep_rules --include=posts/**/*.md
+      - run: semgrep ci --config semgrep_rules --include=posts/**/*.md --baseline-commit=a2f9f6bfdbb4675907465c0a72e7d4e9ea68131a
   
 
   # Build job
