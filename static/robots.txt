@@ -1,3 +1,5 @@
+Sitemap: https://jreyesr.github.io/sitemap.xml
+
 User-agent: *
 Disallow: /
 
