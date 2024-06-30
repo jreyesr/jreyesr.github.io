@@ -7,6 +7,10 @@ categories: ['python']
 toc: true
 ---
 
+**UPDATE 2024-06-30:** Recently I went to check Streamsync's repo, to see what they were up to, and it turns out that they've been acquihired by [Writer](https://writer.com/), an AI/LLM/GPT company that offers a platform to do... _stuff_ with generative AI. (It's 2024, after all...) [Acquisition announcement here](https://writer.com/blog/ai-studio-developers/), dated 2024-06-05. Streamsync became [Writer Framework](https://github.com/writer/writer-framework). As of writing this update, it appears to still be very similar to old Streamsync, except that now its examples contain many more chatbot apps and "we'll now write an app that receives a user prompt and generates the outline of a blog post in your company's tone". As far as I can tell, everything that is said in this post about Streamsync's capabilities is still valid. This post has nothing to say about the rest of Writer's products, nor about the phenomenon of generative AI as a whole. We'll focus on Streamsync/Writer Framework _qua_ Python library that can be used to create web applications in a drag-and-drop fashion that is different to monolithic/server side apps, that use templated HTML rendered server-side; and to client-side apps/SPAs, that use a framework such as Vue/React/Angular and pure client-side rendering.
+
+---
+
 In this article, we'll review [Streamsync](https://www.streamsync.cloud/), a (young) framework that lets you create interactive web applications backed by Python code. We'll compare it with some desktop UI frameworks, and also with Streamlit, which has been [specifically called out by Streamsync's author](https://www.reddit.com/r/Python/comments/135i584/streamsync_ui_editor_python/) as both an inspiration and a... competitor? alternative? Whatever, it's all in good fun.
 
 ## Introduction
@@ -71,15 +75,15 @@ Basically, here's how you develop a Windows Forms application:
 
 You open the visual editor, where you'll be greeted by a blank screen:
 
-![](https://learn.microsoft.com/en-us/visualstudio/ide/media/vs-2022/csharp-winform-hello-world-project-toolbox.png)
+![Visual Studio UI showing a window being designed](https://learn.microsoft.com/en-us/visualstudio/ide/media/vs-2022/csharp-winform-hello-world-project-toolbox.png)
 
 You select a Button and drag it to the window:
 
-![](https://learn.microsoft.com/en-us/visualstudio/ide/media/vs-2022/csharp-winform-add-button-on-form.png?view=vs-2022)
+![a window with a button in the center](https://learn.microsoft.com/en-us/visualstudio/ide/media/vs-2022/csharp-winform-add-button-on-form.png?view=vs-2022)
 
 You double-click the button so that it generates a handler (now in C# code):
 
-![](https://learn.microsoft.com/en-us/visualstudio/ide/media/vs-2022/csharp-winform-button-click-code.png?view=vs-2022)
+![C# code that handles a button click](https://learn.microsoft.com/en-us/visualstudio/ide/media/vs-2022/csharp-winform-button-click-code.png?view=vs-2022)
 
 Inside that handler, you can do operations. For example, here the click handler imperatively sets a Label's text.
 
@@ -95,7 +99,7 @@ Writing a Qt program that is based on widgets is quite similar to doing so in Wi
 
 You start from an empty window, and you drag-and-drop components:
 
-![](https://doc.qt.io/qtcreator/images/qtcreator-textfinder-ui.png)
+![the QT editor with a window and some widgets](https://doc.qt.io/qtcreator/images/qtcreator-textfinder-ui.png)
 
 You select the button, choose its `clicked()` signal (i.e. the event), and create a _slot_ (i.e. a function, otherwise known as an event handler). From now on, whenever the signal is triggered, the slot gets called.
 
@@ -133,7 +137,7 @@ ApplicationWindow {
 }
 ```
 
-![](https://doc.qt.io/qt-6/images/mainscreen.png)
+![a QT window with several alarts, each with a time and a switch to disable it](https://doc.qt.io/qt-6/images/mainscreen.png)
 
 So, the UI declaration is different here: you use text to instantiate UI widgets. However, the state management is different here: the part of the UI that lists the alarms (the `ListView` item) simply references a `model` property, which is the state. The `RoundButton` below, which adds a new alarm (here on a specific time, for ease of explanation) accesses that state and adds a new element to it. Nowhere in the code is there a `alarmListView.addChildren(new SingleAlarm(...))` or something similar (in other words, nothing explicitly adds a new Widget to the alarm list). Instead, the handler code changes the model/state, and the list view rerenders in response.
 
@@ -147,11 +151,11 @@ Inside the entire low-code umbrella, there's a sector dedicated to UIs for inter
 
 This is Retool:
 
-![](https://uploads-ssl.webflow.com/5d2739e4cf8d9538f80af0a6/642ed9eb5b4feac419dbef45_Interactive%20Deal%20Report%20_%20Editor%20_%20Retool-min-p-800.png)
+![a Retool window with a table and a pie chart](https://uploads-ssl.webflow.com/5d2739e4cf8d9538f80af0a6/642ed9eb5b4feac419dbef45_Interactive%20Deal%20Report%20_%20Editor%20_%20Retool-min-p-800.png)
 
 This is Tooljet:
 
-![](https://uploads-ssl.webflow.com/5d2739e4cf8d9538f80af0a6/642edb7f261f586e42b91fc9_GitHub%20Star%20Ranking%20-%20ToolJet-min-p-800.png)
+![a Toolkjet window with some text fields for searching and a table](https://uploads-ssl.webflow.com/5d2739e4cf8d9538f80af0a6/642edb7f261f586e42b91fc9_GitHub%20Star%20Ranking%20-%20ToolJet-min-p-800.png)
 
 Both have the under-development UI in the center, and the Properties dialog to the right.
 
@@ -163,7 +167,7 @@ Consider, for example, accessing a SQL DB. You probably don't want the raw SQL p
 
 * A standard server-side framework (Django? Laravel? Rails? Spring Web? .NET Core?) would solve this by defining views (in HTML + whatever templating language the framework uses) and controllers (code in whichever backend language the framework uses). The controllers would connect to the DB, and thus you'd only establish connections from the trusted application server, subject to whichever access controls and business logic you deem appropriate
 * If developing an SPA (with Vue, React or Angular), you'd need to implement a REST API (which is somewhat like a server-side framework but with only controllers, no views). These controllers would again connect to the DB
-* Then there's server-side-rendered applications, which are a mix of both. Take [NextJS](https://nextjs.org/) for an example, which [I've been using lately](https://jreyesr.github.io/categories/nextjs/). Using the App Router, you may use [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions), which encapsulate API calls. Some functions would run in the context of the client, while others (marked with `use server`) would run in the backend Node server. Only the latter functions would be able to access the database
+* Then there's server-side-rendered applications, which are a mix of both. Take [NextJS](https://nextjs.org/) for an example, which [I've been using lately](/categories/nextjs/). Using the App Router, you may use [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions), which encapsulate API calls. Some functions would run in the context of the client, while others (marked with `use server`) would run in the backend Node server. Only the latter functions would be able to access the database
 
 Streamsync's handlers are similar to [NextJS's Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions), in that they happen automatically. You simply write some code and know that it will run on the server, not on the client. This code can access locked-down servers (where the origin IP has nbeem firewalled so only the application server can initiate a connection), refer to secret API keys and more, since it'll never be exposed to the client. Furthermore, if you implement data validation/sanitization, rate limits, access control, audit/logging or similar concerns in the server-side handlers, they can't be bypassed by a malicious client.
 
@@ -206,7 +210,7 @@ NiceGUI gives you that dashboard.
 
 For example, consider [this example](https://nicegui.io/#common_ui_elements):
 
-![59d7b9688e75cd6d8ddc94bcef84163a.png](./_resources/59d7b9688e75cd6d8ddc94bcef84163a.png)
+![a NiceGUI example application with several buttons](./_resources/59d7b9688e75cd6d8ddc94bcef84163a.png)
 
 It's a bunch of controls, defined in code, along with their respective event handlers. For example, when the Button is clicked, a lambda function is called, which pops up a toast-like notification. When the checkbox is toggled, a standalone function is called. And so on.
 
@@ -222,13 +226,13 @@ We'll now run a few tests with Streamsync, taken from other, similar tools that 
 
 Streamlit has a step-by-step tutorial on [creating a small webapp to explore a Uber dataset](https://docs.streamlit.io/library/get-started/create-an-app), where you can see rides in NY, each with a timestamp. From there, the app plots a count grouped by hour of day, and a map of all rides requested in a specific hour of the day. The hour used on the map is configured by the user, using a slider:
 
-![1d734c2949e4d70bfc5d428285db1184.png](./_resources/1d734c2949e4d70bfc5d428285db1184.png)
+![a bar chart showing per-hour counts. A slider below it is use to select an hour](./_resources/1d734c2949e4d70bfc5d428285db1184.png)
 
 Not too difficult, but it will help us get acquainted with Streamsync's workflow.
 
 By default, Streamsync creates this UI:
 
-![d58ffcabc4de04bc02d010d2624d2416.png](./_resources/d58ffcabc4de04bc02d010d2624d2416.png)
+![Streamsync's editor, with the application in the center and a component palette to the left](./_resources/d58ffcabc4de04bc02d010d2624d2416.png)
 
 1. This is the "widget palette", from where you can drag-and-drop new UI controls, such as text fields, buttons, layout helpers (horizontal or vertical containers, for example) and more
 2. This is the "Component Tree", a hierarchical representation of the app's components. The DOM, if you will. Here we can see every container, down to the leaf items. Perfect for hoisting an item outside of a container
@@ -240,7 +244,7 @@ Okay, now time to add the actual UI: a barchart plotting the amount of rides, bu
 
 First, here's the UI:
 
-![0c636182d224551a13b8b4f3f7f2d563.png](./_resources/0c636182d224551a13b8b4f3f7f2d563.png)
+![a bar chart showing per-hour counts, a slider above it and a heatmap below it](./_resources/0c636182d224551a13b8b4f3f7f2d563.png)
 
 There's almost no configuration required: the Slider is configured so its range is 0 to 23, with a step of 1; it's bound to the state element `hod` and its `ss-number-change` event is bound to the `recalculate` listener. The first plot (the bar chart) is bound to the `@{plotly_bars}` state element (the map), while the second is bound to `@{plotly_map}`
 
@@ -358,7 +362,7 @@ This will let us test several things:
 
 Here's my final result:
 
-![6fb8374423d1f0e2d360ade2fabc435d.png](./_resources/6fb8374423d1f0e2d360ade2fabc435d.png)
+![a form with fields for a name, email and comments, and a checkbox](./_resources/6fb8374423d1f0e2d360ade2fabc435d.png)
 And here's the code:
 
 ```py
@@ -444,7 +448,7 @@ Then, we need to create a table that displays all users. Retool's [Table compone
 
 Anyways, since we don't have a Pandas dataframe but a list of JSON objects that come from the mock Retool API, we need to first transform it to the appropriate format, so the Streamsync UI can display it (as if it were a Pandas DF):
 
-![5e43a36fb027ed25ba496193ee4ccc72.png](./_resources/5e43a36fb027ed25ba496193ee4ccc72.png)
+![a table in Streamsync](./_resources/5e43a36fb027ed25ba496193ee4ccc72.png)
 
 ```py
 import os
@@ -569,7 +573,7 @@ ss.init_state({
 
 can create the following UI:
 
-![bdad70630683b3b38e9d4eb9feda369f.png](./_resources/bdad70630683b3b38e9d4eb9feda369f.png)
+![a repeated component in Streamsync](./_resources/bdad70630683b3b38e9d4eb9feda369f.png)
 
 There's a Repeater component (see the component tree at the bottom left) which contains a HTML Element, which in turn contains a Text component. The HTML element is there just to add the light red background to each element, you can ignore it.
 
@@ -607,7 +611,7 @@ So I suspect that's why Streamsync requires you to provide a dictionary: keys ar
 
 Now, having resolved that small matter, we can try to display the data that would normally go in a table: the user's name, email, blocked/unblocked status, and (since we can't rely on the selected item on a table to block/unblock the currently selected user) an action button for every user:
 
-![c1f558704115d3ff681c0a39e861d801.png](./_resources/usermgmt.png)
+![a table in Streamsync that shows users, each of which has a button to block or unblock it](./_resources/usermgmt.png)
 
 ```py
 import os
@@ -647,7 +651,7 @@ The header is a manually-created Column, which is outside the Repeater. The acti
 A couple of things to note:
 
 * ~~I tried to make the user's status be a nice icon, instead of just `true`/`false`, by adding two Image components to the second-to-last column, and setting [conditional visibility](https://www.streamsync.cloud/builder-basics.html#visibility) on them. However, that didn't work, and I'm not really sure why. Setting breakpoints on the (compiled) Vue code points to a bug, since the context is `undefined`... which it shouldn't be~~ As of [Streamsync v0.1.9](https://github.com/streamsync-cloud/streamsync/releases/tag/v0.1.9), we can make the user's status be a nice icon. The trick is to actually have _two_ Image components on the second-to-last column, one of a check mark and one of an X. Then, we assign them conditional visibilities: the check is visible if `item.blocked` and the X is visible if `item.unblocked`. Also, `unblocked` is manually set in the `prepare_users` function, in much the same way that the `action` is set to a text description of whether the user is blocked or not. Since `unblocked` is set to be the Boolean negation of `blocked`, only one of them will be visible at once, and thus we achieve the same effect as if the Image toggled its contents. See below:
-    ![](./_resources/condvis.png)
+    ![a Streamsync table with users, each of which has a check or an X showing wheter it is disabled](./_resources/condvis.png)
 * **No longer valid, see just below** ~~The buttons don't work. We can hook up a handler function to them alright, and link it to the `click` event, but click events on buttons have no payload and thus there is no way of detecting (in the BE) which of the buttons was clicked, hence no way of detecting which user's status should be toggled, and to what (active or inactive). And I'm not sure what could be changed to make it work. We would need a way to provide arbitrary parameters to event handlers, which could access the current context (to work inside Repeaters). Ideally, the handler function should get access to the `@{item}` variable, since that's where the user's data is.~~
 * **UPDATE 2023-07-25**: Initially I didn't find a way to access the per-iteration context, so as to make the buttons block/unblock the user to which they belong. Turns out I'm blind. [Event handlers that run from a Repeater get access to a `context` parameter which holds the item that existed in that iteration of the Repeater](https://www.streamsync.cloud/repeater.html#event-context). This means that you can make all the Buttons point to the same `action_clicked` handler, and inside of the handler you know:
     * that you're toggling a user's state, because you are in that specific function handler

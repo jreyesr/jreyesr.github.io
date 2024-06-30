@@ -7,6 +7,10 @@ categories: ['python', 'vue']
 toc: true
 ---
 
+**UPDATE 2024-06-30:** Recently I went to check Streamsync's repo, to see what they were up to, and it turns out that they've been acquihired by [Writer](https://writer.com/), an AI/LLM/GPT company that offers a platform to do... _stuff_ with generative AI. (It's 2024, after all...) [Acquisition announcement here](https://writer.com/blog/ai-studio-developers/), dated 2024-06-05. Streamsync became [Writer Framework](https://github.com/writer/writer-framework). As of writing this update, it appears to still be very similar to old Streamsync, except that now its examples contain many more chatbot apps and "we'll now write an app that receives a user prompt and generates the outline of a blog post in your company's tone". As far as I can tell, everything that is said in this post about Streamsync's capabilities is still valid. This post has nothing to say about the rest of Writer's products, nor about the phenomenon of generative AI as a whole. We'll focus on Streamsync/Writer Framework _qua_ Python library that can be used to create web applications in a drag-and-drop fashion that is different to monolithic/server side apps, that use templated HTML rendered server-side; and to client-side apps/SPAs, that use a framework such as Vue/React/Angular and pure client-side rendering.
+
+---
+
 ## Introduction
 
 A few months ago, I wrote [an article about Streamsync](/posts/streamsync-review/), a very neat framework that lets you create interactive web applications, mixing UI design (via a drag-and-drop visual editor) and backend code (Python, backed by FastAPI). [Here's the project's repo](https://www.streamsync.cloud/).
