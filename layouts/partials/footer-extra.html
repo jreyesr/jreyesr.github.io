@@ -16,9 +16,11 @@
 <!-- needs the event listener because the actual plugin script is deferred -->
 <script type="text/javascript">
     window.addEventListener('DOMContentLoaded', function() {
-        mediumZoom('img', {
+        const zoom = mediumZoom('img', {
           margin: 24,
         });
+        zoom.detach('a img'); // Ignore images that are wrapped in <a>s (since those should be clickable anyways and take users somewhere)
     });
+    
 </script>
 
