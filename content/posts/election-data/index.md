@@ -4,6 +4,7 @@ date: 2023-08-29T20:40:35-0500
 summary: "In this article, we capture time-indexed partial results of Ecuador's recent presidential elections, we review ways of saving them, and we then explore the data. We observe the progression of results over time, we verify that results never stopped coming in, we characterize the time that an average station takes to count and report results, and we see just how few votes it took for the final results to be predictable."
 tags: ['python', 'timescaledb']
 categories: ['sql']
+series: ['elections']
 toc: true
 ---
 

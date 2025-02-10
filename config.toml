@@ -4,6 +4,8 @@ title = '''jreyesr's blog'''
 theme = 'anubis'
 timeZone = "America/Guayaquil"
 
+ignoreLogs = ['warning-goldmark-raw-html']
+
 [taxonomies]
   category = 'categories'
   series = 'series'
@@ -24,4 +26,3 @@ utterancesLabel = "utteranc.es"
 [[params.social]]
 id = "github"
 url = "https://github.com/jreyesr"
-

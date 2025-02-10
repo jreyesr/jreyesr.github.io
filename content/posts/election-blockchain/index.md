@@ -3,6 +3,7 @@ title: "An analysis of Ecuador's blockchain system for presidential election res
 date: 2023-09-18T20:40:02-0500
 summary: "In this article, we explore a blockchain system that has been used in a couple of Ecuador's recent elections. We try to discover how it works, what exactly it certifies, and how it does it. Then, we explore what other entities have to say about election security and blockchains in particular, and we present several schemes that seem to have comparable security guarantees at a much lower complexity cost"
 tags: ['reverse-engineering', 'blockchain']
+series: ['elections']
 toc: true
 ---
 
