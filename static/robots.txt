@@ -1,4 +1,4 @@
-Sitemap: https://jreyesr.github.io/sitemap.xml
+Sitemap: https://blog.jreyesr.com/sitemap.xml
 
 User-agent: *
 Disallow: /
