@@ -15,9 +15,9 @@ This lets you use N8N to generate custom reports, invoices, and such documents w
 
 The node is published at <https://github.com/jreyesr/n8n-nodes-carbonejs>, and you can install it on your N8N instance by going to the `Settings>Community Nodes` tab and installing `n8n-nodes-carbonejs`.
 
----
+*****
 
-Hello! Today we'll take a break from [the OpenChatflow chatbot designer](https://jreyesr.github.io/posts/chatflow-6/) that we've been working on to work on something completely different: a new custom node for the [N8N](https://n8n.io/) workflow automation tool, which lets you generate Word documents from a Word template, combined with some JSON data. This is a really common enterprise-y requirement, and it's quite strange that there seem to be no such integrations in N8N. We'll use the [Carbone project](https://carbone.io/)'s JS library to do so.
+Hello! Today we'll take a break from [the OpenChatflow chatbot designer](/posts/chatflow-6/) that we've been working on to work on something completely different: a new custom node for the [N8N](https://n8n.io/) workflow automation tool, which lets you generate Word documents from a Word template, combined with some JSON data. This is a really common enterprise-y requirement, and it's quite strange that there seem to be no such integrations in N8N. We'll use the [Carbone project](https://carbone.io/)'s JS library to do so.
 
 To be clear, this is what we need:
 
@@ -28,7 +28,7 @@ flowchart LR
 	renderer --> out[Word document]
 ```
 
-We'll use the [Carbone JS library](), since 
+We'll use the [Carbone JS library](https://github.com/carboneio/carbone), since 
 
 * It's open source(ish, though the [FSF](https://www.fsf.org/) will probably not think so)
 * It's written on Javascript, hence should be compatible with N8N
@@ -39,11 +39,11 @@ We'll use the [Carbone JS library](), since
 
 Here's how Carbone works, taken from their own docs:
 
-![](https://carbone.io/img/doc/carboneWorkflow.svg)
+![a diagram showing data + a Word template being fed into Carbone, and a Word document coming out](https://carbone.io/img/doc/carboneWorkflow.svg)
 
 Here you can see a sample document (again, taken from Carbone's page):
 
-![](https://carbone.io/img/demo-design.gif)
+![Carbone's web template editor side-by-side with a generated document](https://carbone.io/img/demo-design.gif)
 
 If you have used an HTML templating library, such as [Django](https://docs.djangoproject.com/en/4.2/ref/templates/language/#templates), [Jinja](https://jinja.palletsprojects.com/en/3.1.x/templates/#synopsis), [Handlebars](https://handlebarsjs.com/guide/#what-is-handlebars), [Twig](https://twig.symfony.com/doc/3.x/templates.html#synopsis) or [Vue's templates](https://vuejs.org/guide/essentials/template-syntax.html#text-interpolation), you should find Carbone to be quite similar. Variable placeholders are placed inside single curly braces `{ var.name }`, and when rendering the template they are replaced by whatever corresponding values are in the JSON file. In this way, the same template can be used to generate many similar documents: invoices, diplomas, letters, any sort of business-y document that would otherwise require some poor soul to copy an old document and then change every variable part to a new value.
 
@@ -117,15 +117,15 @@ Every node is declared in a file, located in `nodes/<NodeName>/<NodeName>.node.t
 	* A bigger version of the same, the [Switch node](https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.switch/#example-usage) has four outputs
 	* The [Split in Batches Node](https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.splitinbatches/#example-usage-read-rss-feed-from-two-different-sources) also has two outputs, but they are conceptually different, unlike the If and Switch nodes
 * A set of "properties", which are the fields that appear when you are configuring a node. For instance, here's the configuration of a node that reads files from disk:
-    ![11a7449ea8e9efe8f8abdbe264eb2656.png](./_resources/11a7449ea8e9efe8f8abdbe264eb2656.png)
+    ![a screenshot from the Read Binary node, which requires a file path](./_resources/11a7449ea8e9efe8f8abdbe264eb2656.png)
 	
 These properties deserve a deeper dive, since they control the node's UI. Properties are input fields (text fields, number fields, dropdowns, checkboxes or switches, and so on), each with a title, optional description and hint, type and default value. By default, every field would appear on every operation, but every property can have visibility conditions to make fields appear and disappear dynamically, depending on the values of other fields.
 
 For instance, the Carbone node has two operations: Render and Convert to PDF. The configuration dialogs for each operation look as follows:
 
-![32c16361e4c3aaea70852912f07b58ed.png](./_resources/32c16361e4c3aaea70852912f07b58ed.png)
+![the options for the Render operation, which are the input and output file names, and the context, which is a JSON document](./_resources/32c16361e4c3aaea70852912f07b58ed.png)
 
-![5423cb036f09fa96dbc6ead9346077aa.png](./_resources/5423cb036f09fa96dbc6ead9346077aa.png)
+![the options for the Convert to PDF operation, which are the input and output file names](./_resources/5423cb036f09fa96dbc6ead9346077aa.png)
 
 As you can see, the Operation is always shown, as are the Property Name and Property Name Out fields. However, the Context is only shown on the Render operation (as that's the only operation where we need a JSON document as an input) and the Convert to PDF operation has a yellow "alert" dialog. This is implemented as follows:
 
@@ -270,7 +270,7 @@ I've elided a bunch of error-checking code and only left one operation (that sam
 
 Here's the node's configuration dialog:
 
-![1cd151d2eba63ce29ef69c82b9340a05.png](./_resources/1cd151d2eba63ce29ef69c82b9340a05.png)
+![the options for the Render operation, which are the input and output file names, and the context, which is a JSON document](./_resources/1cd151d2eba63ce29ef69c82b9340a05.png)
 
 The Operation is set to Render, which triggers the code path show above. The Context must be a JSON document, which you can configure with whatever data you like. Here, we take some data from previous nodes, and we manually compose a JSON document. We could just as well provide the entire `$json` variable as a context. We also need to provide a "Property Name", which is the name of the binary property where the template lives.
 
