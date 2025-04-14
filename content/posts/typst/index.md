@@ -25,7 +25,7 @@ Before starting, let's showcase some documents made in Typst. They may look simi
 
 ![the first page of a PDF paper, filled with placeholder text, showing a title, authors, an abstract, and two-column text with sections](https://typst.app/assets/docs/3-advanced-paper.png "A normal paper, styled with Typst")
 
-![a set of equations](https://typst.app/assets/docs/2yP_ovYByyA1-Wxn__oJDQAAAAAAAAAA.png "Equations")
+![a set of equations](./_resources/eqn.png "Equations")
 
 ![a Python code block where some lines have been highlighted in different colors](./_resources/3bbacdff0ace9f15bb8e929c81beea01.png "Code blocks with syntax highlighting and annotations: https://typst.app/universe/package/codly")
 
@@ -33,7 +33,7 @@ Before starting, let's showcase some documents made in Typst. They may look simi
 
 ![a dataflow diagram with an input, three processing steps and an output, joined with arrows of various styles](https://github.com/typst/packages/raw/main/packages/preview/fletcher/0.5.1/docs/gallery/io-flowchart.svg "Flowchart-style diagrams of boxes and arrows: https://typst.app/universe/package/fletcher")
 
-![a set of slides in a PDF document, one slide per page](https://andreaskroepelin.github.io/polylux/book/themes/gallery/simple.png "Slides for presentations: https://typst.app/universe/package/polylux")
+![a set of slides in a PDF document, one slide per page](./_resources/slides.png "Slides for presentations: https://typst.app/universe/package/polylux")
 
 ![a Gantt chart with three sections and activities in each section](https://github.com/typst/packages/raw/main/packages/preview/timeliney/0.0.1/sample.png "Gantt charts: https://typst.app/universe/package/timeliney")
 
@@ -55,7 +55,7 @@ Before starting, let's showcase some documents made in Typst. They may look simi
 
 ![a CV with personal data, previous experience, education, skills, languages and other information](https://github.com/typst/packages/raw/main/packages/preview/grotesk-cv/0.1.2/thumbnail.png "One of many CV templates: https://typst.app/universe/package/grotesk-cv")
 
-![an invoice with recipient information, a table of bought items, pricing and payment information](https://github.com/ad-si/invoice-maker/blob/master/images/example-invoice-hq.png?raw=true "Invoices: https://typst.app/universe/package/invoice-maker")
+![an invoice with recipient information, a table of bought items, pricing and payment information](./_resources/invoice.png "Invoices: https://typst.app/universe/package/invoice-maker")
 
 ![a directed graph/tree layout](https://github.com/cetz-package/cetz/raw/master/gallery/tree.png "A directed tree, made with CetZ: https://github.com/cetz-package/cetz/blob/master/gallery/tree.typ")
 
@@ -196,7 +196,7 @@ More complicated syntax, such as tables, also looks similar:
 
 which generates something like this (after applying some styling that I don't show here for clarity):
 
-![a picture of a table containing the data above](https://typst.app/assets/docs/tvXJoKB8oJjSM7xb5x80tQAAAAAAAAAA.png)
+![a picture of a table containing the data above](./_resources/styled_table.png)
 
 In LaTeX, said table may look like this:
 
