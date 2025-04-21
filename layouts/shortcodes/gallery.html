@@ -1,0 +1,22 @@
+{{ .Page.Store.Set "enable_galleries" true }}
+
+{{ $id := printf "gallery-%03d" $.Ordinal }}
+{{ .Page.Store.Add "galleries" (slice $id) }}
+
+{{ $params := newScratch }}
+{{ if .Params.instant }}{{ $params.Set "speed" 0 }}{{ end }}
+{{ if .Params.instant }}{{ $params.Set "rewind" true }}{{ end }}
+
+<section class="splide" id="{{ $id }}" {{ with .Params.title }}aria-label="{{ . }}"{{ end }} data-splide='{{ $params.Values | jsonify }}'>
+  <div class="splide__track">
+		<ul class="splide__list">
+			{{ range (split .Inner "\n" | complement (slice "")) }}
+        <li class="splide__slide">
+          {{ . | $.Page.RenderString }}
+        </li>
+      {{ end }}
+		</ul>
+  </div>
+</section>
+
+

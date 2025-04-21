@@ -16,6 +16,7 @@ author = 'jreyesr'
 style = 'auto'
 readMore = true
 rssAsSocialIcon = true
+math = true
 
 utterancesRepo = "jreyesr/jreyesr.github.io"
 utterancesTheme = "preferred-color-scheme"
@@ -26,3 +27,13 @@ utterancesLabel = "utteranc.es"
 [[params.social]]
 id = "github"
 url = "https://github.com/jreyesr"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['\[', '\]'], ['$$', '$$']]
+          inline = [['\(', '\)'], ['$', '$']]
+

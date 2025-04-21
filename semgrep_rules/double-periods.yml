@@ -5,7 +5,7 @@ rules:
       include: ["*.md"]
     message: Double periods aren't correct, delete one
     patterns:
-      - pattern-regex: '[^.](?P<PERIODS>\.\.)(?!\s)'
+      - pattern-regex: '[^.](?P<PERIODS>\.\.)\s'
       - focus-metavariable: $PERIODS
     severity: ERROR
     fix: "."

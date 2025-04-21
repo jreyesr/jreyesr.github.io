@@ -792,3 +792,97 @@ aside > nav > ul {
   padding-inline-start: 0px;
 }
 
+.medium-zoom-overlay,
+.medium-zoom-image--opened {
+  z-index: 1;
+}
+
+.splide__arrow:focus-visible {
+    outline: 3px solid #0bf;
+    outline-offset: 3px
+}
+
+.splide__pagination__page.is-active {
+    background: #ccc !important;
+    outline: 2px solid #0bf;
+    outline-offset: 1px;
+}
+
+/* https://muffinman.io/blog/image-comparison-slider/ */
+.compare {
+  --mask-width: 50%;
+  --handle-size: 32px;
+
+  position: relative;
+  border: 1px solid rgb(0 0 0 / 0.05);
+}
+
+.compare__separator {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  left: var(--mask-width);
+  width: 2px;
+  margin-left: -1px;
+  background: black;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.compare > img { /* the right-hand (bottom) image */
+  width: 100%;
+  display: block;
+}
+
+.compare__mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 1;
+  background: white;
+  overflow: hidden;
+  width: var(--mask-width);
+}
+
+.compare > div.compare__mask > img { /* The left-hand (top) image */
+  height: 100%;
+  width: auto;
+  max-width: none; /* Unset theme's max-width:100%, it doesn't allow for the nice cropping */
+}
+
+.compare__input {
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  position: absolute;
+  top: 0;
+  left: calc(var(--handle-size) / -2);
+  width: calc(100% + var(--handle-size));
+  height: 100%;
+  opacity: 0;
+  z-index: 2;
+  cursor: col-resize;
+  background-color: transparent;
+}
+
+.compare__icon {
+  position: absolute;
+  z-index: 2;
+  color: #333;
+  width: var(--handle-size);
+  height: var(--handle-size);
+  top: 50%;
+  left: var(--mask-width);
+  transform: translate(-50%, -50%);
+  padding: 6px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 1);
+}
+
+.compare__icon path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2px;
+}

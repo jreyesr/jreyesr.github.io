@@ -1,0 +1,25 @@
+{{ .Page.Store.Set "enable_compare_sliders" true }}
+{{ .Page.Store.Add "img_sliders" (slice "Hello") }}
+{{ $id := printf "slider-%03d" $.Ordinal }}
+
+{{ $images := findRE `(?s)<img.*?>` (.Inner | .Page.RenderString) }}
+{{ if ne (len $images) 2 }}
+  {{ errorf "The %q shortcode exactly 2 Markdown images to be passed. See %s" .Name .Position }}
+{{ end }}
+
+<div class="compare" style="overflow: visible;" id="{{ $id }}">
+  {{ index $images 1 | safeHTML }}
+
+  <div class="compare__mask">
+    {{ index $images 0 | safeHTML }}
+  </div>
+
+  <div class="compare__separator">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="compare__icon" viewBox="0 0 16 16">
+      <path d="M 6 2 L 1 8 L 6 14 M 10 2 L 15 8 L 10 14" stroke="currentColor"></path>
+    </svg>
+  </div>
+
+  <input class="compare__input" type="range" min="0" step="0.5" max="100" value="50">
+
+</div>

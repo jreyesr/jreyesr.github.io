@@ -20,7 +20,40 @@
           margin: 24,
         });
         zoom.detach('a img'); // Ignore images that are wrapped in <a>s (since those should be clickable anyways and take users somewhere)
+        zoom.detach('.compare img'); // Ignore images that will have the slide-to-compare thingy
     });
     
 </script>
 
+{{ if .Store.Get "enable_compare_sliders" }}
+<script>
+for(const compareSlider of document.querySelectorAll(".compare")) {
+  const input = compareSlider.querySelector(".compare__input");
+
+  input.addEventListener("input", () => {
+    compareSlider.style.setProperty("--mask-width", `${input.value}%`);
+  });
+
+  compareSlider.style.setProperty("--mask-width", `${input.value}%`);
+}
+</script>
+{{ end }}
+
+{{ if eq (.Store.Get "enable_galleries") true }}
+<script>
+function initGallery(id) {
+  console.log("Enabling gallery", id);
+}
+</script>
+{{ end }}
+
+{{ if eq (.Store.Get "enable_galleries") true }}
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js" integrity="sha384-RbYB5yr9jD1p+2OHlV3KzOBLAY48CbFsJ87bXEFYINGgOlQJNE4cEjTUf+Q2fygb" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+
+<script>
+  for (const e of document.getElementsByClassName('splide')) {
+    new Splide(e).mount();
+  }
+</script>
+{{ end }}
