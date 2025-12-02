@@ -1,0 +1,12 @@
+{{ .Page.Store.Set "hasObservable" true }}
+{{ $chartName := .Get 0 }} 
+{{ $id := printf "observable-%03d" $.Ordinal }} 
+{{ $chartParams := .Params }}
+
+{{ with .Page.Resources.Get "observable/dist/charts.js" }}
+<div id="{{ $id }}"></div>
+<script type="module">
+    import { {{ $chartName | safeJS }} } from {{ .RelPermalink }};
+    document.getElementById({{ $id }}).replaceWith(await {{ $chartName | safeJS }}(...{{ after 1 $chartParams }}));
+</script>
+{{ end }}

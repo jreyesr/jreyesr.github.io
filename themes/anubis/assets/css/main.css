@@ -669,6 +669,20 @@ ul.language-select > li, ul.footer-menu > li {
     margin-bottom: 1em;
 }
 
+.observable-notice {
+    color: var(--switcher-color);
+    background: var(--switcher-bg-color);
+    padding: 0.5em 1em;
+    font-size: 1.2rem;
+    border: none;
+    margin-bottom: 1em;
+    
+    &:hover {
+        filter: brightness(85%);
+    }
+}
+
+
 .h-card {
     display: none;
 }

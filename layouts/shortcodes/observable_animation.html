@@ -1,0 +1,29 @@
+{{ .Page.Store.Set "hasObservable" true }}
+{{ $chartName := .Get 0 }} 
+{{ $startValue := .Get 1 }}
+{{ $endValue := .Get 2 }}
+{{ $interval := .Get 3 }}
+{{ $id := printf "observable_%03d" $.Ordinal }} 
+{{ $buttonId := printf "button_play_observable_%03d" $.Ordinal }}
+{{ $extraParams := after 4 .Params }}
+
+{{ with .Page.Resources.Get "observable/dist/charts.js" }}
+<button id="{{ $buttonId }}">Play</button>
+<div id="{{ $id }}"></div>
+<script type="module">
+    import { {{ $chartName | safeJS }} } from {{ .RelPermalink }};
+    let interval;
+    
+    document.getElementById({{ $buttonId }}).addEventListener("click", () => {
+      let counter = {{ $startValue }};
+      clearInterval(interval)
+      
+      interval = setInterval(async () => {
+        if(counter++ > {{ $endValue }}) clearInterval(interval);
+        document.getElementById({{ $id }}).replaceChildren(await {{ $chartName | safeJS }}(counter, ...{{ $extraParams }}));
+      }, {{ $interval }})
+    })
+    
+    document.getElementById({{ $id }}).replaceChildren(await {{ $chartName | safeJS }}({{ $endValue }}, ...{{ $extraParams }}));
+</script>
+{{ end }}

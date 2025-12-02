@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="generator" content="Observable Framework v1.13.3">
+<title>Step function discovery through minimal adaptive sampling | Interest Rates</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="./_observablehq/theme-cotton,sun-faded,wide.622a818d.css">
+<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.ea9fd553.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-cotton,sun-faded,wide.622a818d.css">
+<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.ea9fd553.css">
+<link rel="modulepreload" href="./_observablehq/client.0e7dc575.js">
+<link rel="modulepreload" href="./_observablehq/runtime.e080113b.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.73a8ec5a.js">
+<link rel="modulepreload" href="./_import/charts.c3e203f1.js">
+<link rel="modulepreload" href="./_npm/htl@0.3.1/72f4716c.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/inputs.4ef1d259.js">
+<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.17/d761ef9b.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/9cffc2bd.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/18cbf477.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/e780feca.js">
+<link rel="modulepreload" href="./_npm/interval-tree-1d@1.0.4/53fe8176.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/e93ca09f.js">
+<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/0f2de24d.js">
+<link rel="modulepreload" href="./_npm/d3-brush@3.0.0/65eb105b.js">
+<link rel="modulepreload" href="./_npm/d3-chord@3.0.1/7ef8fb2e.js">
+<link rel="modulepreload" href="./_npm/d3-color@3.1.0/aeb57b94.js">
+<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/1d2aed74.js">
+<link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/5ced1d52.js">
+<link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/9ba9c7f3.js">
+<link rel="modulepreload" href="./_npm/d3-drag@3.0.0/4202580c.js">
+<link rel="modulepreload" href="./_npm/d3-ease@3.0.1/cdd7e898.js">
+<link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/b4e2ad9a.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/5e804d15.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.0/86074ef6.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/40599fb3.js">
+<link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/e49e792c.js">
+<link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/8d1e5425.js">
+<link rel="modulepreload" href="./_npm/d3-path@3.1.0/20d3f133.js">
+<link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/7553081f.js">
+<link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/0dfd751c.js">
+<link rel="modulepreload" href="./_npm/d3-random@3.0.1/3c90ee06.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/843b6a76.js">
+<link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/ba24c2e7.js">
+<link rel="modulepreload" href="./_npm/d3-selection@3.0.0/4d94e5b7.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/6d3a6726.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/9f03c579.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/07c9626f.js">
+<link rel="modulepreload" href="./_npm/d3-timer@3.0.1/b58a267d.js">
+<link rel="modulepreload" href="./_npm/d3-transition@3.0.1/004da2ac.js">
+<link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/b5786b3f.js">
+<link rel="modulepreload" href="./_npm/binary-search-bounds@2.0.5/cbf6ba23.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/e08981d9.js">
+<link rel="modulepreload" href="./_npm/delaunator@5.0.1/02d43215.js">
+<link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/aa00730b.js">
+<script type="module">
+
+import {define} from "./_observablehq/client.0e7dc575.js";
+import {registerFile} from "./_observablehq/stdlib.73a8ec5a.js";
+
+registerFile("./data/interest.csv", {"name":"./data/interest.csv","mimeType":"text/csv","path":"./_file/data/interest.3455a12c.csv","lastModified":1764122074830,"size":11014});
+registerFile("./data/interest_361d.csv", {"name":"./data/interest_361d.csv","mimeType":"text/csv","path":"./_file/data/interest_361d.5cb323a7.csv","lastModified":1764042931142,"size":328});
+registerFile("./data/interest_grid.csv", {"name":"./data/interest_grid.csv","mimeType":"text/csv","path":"./_file/data/interest_grid.1e86b442.csv","lastModified":1764534114229,"size":34857});
+registerFile("./data/sampling_361d.csv", {"name":"./data/sampling_361d.csv","mimeType":"text/csv","path":"./_file/data/sampling_361d.2edddfcf.csv","lastModified":1764287408790,"size":1991});
+registerFile("./data/sampling_all.csv", {"name":"./data/sampling_all.csv","mimeType":"text/csv","path":"./_file/data/sampling_all.55b007d8.csv","lastModified":1764300356325,"size":7599});
+
+define({id: "b6be8d94", outputs: ["data_361d","data_full","sampling_361d","interestFunctionAtTime","interestFunctionAtCapital","basicPlot","gridPlot","plotSampling1D","fullPlot","plotProgress","Scrubber"], body: async () => {
+const {data_361d, data_full, sampling_361d, interestFunctionAtTime, interestFunctionAtCapital, basicPlot, gridPlot, plotSampling1D, fullPlot, plotProgress, Scrubber} = await import("./_import/charts.c3e203f1.js");
+
+return {data_361d,data_full,sampling_361d,interestFunctionAtTime,interestFunctionAtCapital,basicPlot,gridPlot,plotSampling1D,fullPlot,plotProgress,Scrubber};
+}});
+
+define({id: "e683faa8", inputs: ["gridPlot","display"], body: async (gridPlot,display) => {
+display(await(
+gridPlot()
+))
+}});
+
+define({id: "e77d81db", inputs: ["basicPlot","display"], body: async (basicPlot,display) => {
+display(await(
+basicPlot()
+))
+}});
+
+define({id: "178f8411", inputs: ["fullPlot","days","capital","display"], body: async (fullPlot,days,capital,display) => {
+display(await(
+fullPlot(days, capital)
+))
+}});
+
+define({id: "2d0887cf", mode: "inline", inputs: ["Inputs","html","daysInput","display"], body: async (Inputs,html,daysInput,display) => {
+display(await(
+Inputs.bind(html`<input type=range style="width: 120px; accent-color: red" min=31 max=720>`, daysInput)
+))
+}});
+
+define({id: "ab51004e", mode: "inline", inputs: ["days","display"], body: async (days,display) => {
+display(await(
+days
+))
+}});
+
+define({id: "bd08022e", mode: "inline", inputs: ["capital","display"], body: async (capital,display) => {
+display(await(
+capital
+))
+}});
+
+define({id: "ec7fe556", mode: "inline", inputs: ["capitalInput","display"], body: async (capitalInput,display) => {
+display(await(
+capitalInput
+))
+}});
+
+define({id: "6315f3eb", inputs: ["Inputs","Generators"], outputs: ["numberInput","number","capitalInput","capital","daysInput","days"], body: (Inputs,Generators) => {
+const numberInput = Inputs.input(0);
+const number = Generators.input(numberInput);
+
+const capitalInput = Inputs.range([100, 1e6], {step: 10, value: 45000, transform: Math.log, width: 60})
+capitalInput.number.style.cssText += "display: none"
+capitalInput.style.cssText += "display: inline"
+capitalInput.range.style.cssText += "max-width: 120px"
+capitalInput.range.style.cssText += "accent-color: blue"
+capitalInput.range.parentNode.style.cssText += "display: inline"
+const capital = Generators.input(capitalInput);
+
+const daysInput = Inputs.input(500);
+const days = Generators.input(daysInput);
+return {numberInput,number,capitalInput,capital,daysInput,days};
+}});
+
+define({id: "cfc678af", inputs: ["interestFunctionAtTime","days","Plot","interestFunctionAtCapital","capital","display","html","fullPlot"], outputs: ["fixedDaysData","fixedDaysPlot","fixedCapitalData","fixedCapitalPlot"], body: (interestFunctionAtTime,days,Plot,interestFunctionAtCapital,capital,display,html,fullPlot) => {
+const fixedDaysData = interestFunctionAtTime(days)
+const fixedDaysPlot = Plot.plot({
+  marks: [
+    Plot.lineY(fixedDaysData, {x: "capital", y: "interest_rate"}),
+    Plot.crosshairX(fixedDaysData, {x: "capital", maxRadius: 2000}),
+    Plot.tip(fixedDaysData, Plot.pointerX({x: "capital", y: "interest_rate", maxRadius: 2000})),
+    Plot.axisX({color: "red"}),
+    Plot.ruleY([3], {stroke: "red", strokeWidth: 2})
+  ],
+  x: {type: "log", label: "Capital (USD)"},
+  y: {label: "Yearly interest (%)", domain: [3, 6]}
+})
+
+const fixedCapitalData = interestFunctionAtCapital(capital)
+const fixedCapitalPlot = Plot.plot({
+  marks: [
+    Plot.lineX(fixedCapitalData, {x: "interest_rate", y: "days"}),
+    Plot.crosshairY(fixedCapitalData, {y: "days", maxRadius: 2000}),
+    Plot.tip(fixedCapitalData, Plot.pointerY({y: "days", x: "interest_rate", maxRadius: 2000})),
+    Plot.axisY({color: "blue"}),
+    Plot.ruleX([3], {stroke: "blue", strokeWidth: 2})
+  ],
+  x: {label: "Yearly interest (%)", domain: [3, 6]},
+  y: {label: "Duration (d)", domain: [0, 720]},
+})
+
+display(html`<div class="grid grid-cols-2">
+  <div class="card">${fullPlot(days, capital)}</div>
+  <div class="card">${fixedDaysPlot}</div>
+  <div class="card">${fixedCapitalPlot}</div>
+  <div></div>
+</div>`)
+return {fixedDaysData,fixedDaysPlot,fixedCapitalData,fixedCapitalPlot};
+}});
+
+define({id: "473cb77f", inputs: ["plotSampling1D","display"], body: async (plotSampling1D,display) => {
+display(await(
+plotSampling1D()
+))
+}});
+
+define({id: "146cf664", inputs: ["data_361d"], outputs: ["samplePoint","sampleInterest"], body: (data_361d) => {
+const samplePoint = 15000;
+const sampleInterest = data_361d.find(({capital}) => capital >= samplePoint).yearly_interest_rate
+return {samplePoint,sampleInterest};
+}});
+
+define({id: "f0b3d3e2", mode: "inline", inputs: ["samplePoint","display"], body: async (samplePoint,display) => {
+display(await(
+samplePoint
+))
+}});
+
+define({id: "536412ee", mode: "inline", inputs: ["sampleInterest","display"], body: async (sampleInterest,display) => {
+display(await(
+sampleInterest
+))
+}});
+
+define({id: "eef5b27c", inputs: ["plotSampling1D","Plot","samplePoint","sampleInterest","display"], body: async (plotSampling1D,Plot,samplePoint,sampleInterest,display) => {
+display(await(
+plotSampling1D({marks: [
+  Plot.ruleX([samplePoint]),
+  Plot.dot([[samplePoint, sampleInterest]], {x: "0", y: "1", symbol: "times", stroke: "var(--theme-foreground-focus)", r: 5}),
+  Plot.tip(["Sample!"], {x: samplePoint, y: sampleInterest, fillOpacity: 1, anchor: "bottom-right"}),
+]})
+))
+}});
+
+define({id: "2fae4b85", inputs: ["plotProgress","display"], body: async (plotProgress,display) => {
+display(await(
+plotProgress(2, 2)
+))
+}});
+
+define({id: "f9dc4923", inputs: ["plotProgress","display"], body: async (plotProgress,display) => {
+display(await(
+plotProgress(3, 1)
+))
+}});
+
+define({id: "72d94727", inputs: ["plotProgress","display"], body: async (plotProgress,display) => {
+display(await(
+plotProgress(5, 1)
+))
+}});
+
+define({id: "48a58233", inputs: ["plotProgress","display"], body: async (plotProgress,display) => {
+display(await(
+plotProgress(8, 1)
+))
+}});
+
+define({id: "0a7d5b48", inputs: ["plotProgress","display"], body: async (plotProgress,display) => {
+display(await(
+plotProgress(11, 1)
+))
+}});
+
+define({id: "ffe4f91f", inputs: ["plotProgress","display"], body: async (plotProgress,display) => {
+display(await(
+plotProgress(14, 1)
+))
+}});
+
+define({id: "9d4af9d3", inputs: ["plotProgress","display"], body: async (plotProgress,display) => {
+display(await(
+plotProgress(17, 2)
+))
+}});
+
+define({id: "920fdfee", inputs: ["plotProgress","display"], body: async (plotProgress,display) => {
+display(await(
+plotProgress(20, 1)
+))
+}});
+
+define({id: "29b9c08f", inputs: ["plotProgress","display"], body: async (plotProgress,display) => {
+display(await(
+plotProgress(23, 2)
+))
+}});
+
+define({id: "b1a4a493", inputs: ["plotProgress","display"], body: async (plotProgress,display) => {
+display(await(
+plotProgress(26, 2)
+))
+}});
+
+define({id: "bfccf40d", inputs: ["sampling_361d","view","Scrubber"], outputs: ["frameNumbers","maxStep"], body: (sampling_361d,view,Scrubber) => {
+const frameNumbers = Array.from({length: sampling_361d.length}, (_, i) => i).slice(2)
+
+const maxStep = view(Scrubber(frameNumbers, {autoplay: false, initial: frameNumbers.length - 1, loopDelay: 2000, delay: 200, format: () => ""}))
+return {frameNumbers,maxStep};
+}});
+
+define({id: "b2963b2d", mode: "inline", inputs: ["frameNumbers","display"], body: async (frameNumbers,display) => {
+display(await(
+frameNumbers.length
+))
+}});
+
+define({id: "9a71ae6b", inputs: ["plotProgress","maxStep","display"], body: async (plotProgress,maxStep,display) => {
+display(await(
+plotProgress(maxStep, 1)
+))
+}});
+
+define({id: "6fcb85fc", mode: "inline", inputs: ["sampling_361d","display"], body: async (sampling_361d,display) => {
+display(await(
+sampling_361d.length
+))
+}});
+
+define({id: "4c997504", inputs: ["FileAttachment"], outputs: ["samplingAll","samplingAllUpTo"], body: async (FileAttachment) => {
+const samplingAll = await FileAttachment("./data/sampling_all.csv").csv({typed: true})
+const samplingAllUpTo = (n) => samplingAll.slice(0, n)
+
+return {samplingAll,samplingAllUpTo};
+}});
+
+define({id: "25859ff5", inputs: ["samplingAll","view","Scrubber"], outputs: ["allFrameNumbers","maxStepAll"], body: (samplingAll,view,Scrubber) => {
+const allFrameNumbers = Array.from({length: samplingAll.length + 1}, (_, i) => i)
+
+const maxStepAll = view(Scrubber(allFrameNumbers, {autoplay: false, loop: false, delay: 50, format: (step) => `Sample #${step + 1}`}))
+return {allFrameNumbers,maxStepAll};
+}});
+
+define({id: "8ebaff0b", inputs: ["Plot","maxStepAll","samplingAll","samplingAllUpTo","display"], body: async (Plot,maxStepAll,samplingAll,samplingAllUpTo,display) => {
+display(await(
+Plot.plot({
+  marks: [
+    maxStepAll === samplingAll.length ? undefined : Plot.dot([samplingAll[maxStepAll]], {x: "capital", y: "days", stroke: "var(--theme-foreground-focus)", symbol: "times", r: 5}),
+    Plot.dot(samplingAllUpTo(maxStepAll), {x: "capital", y: "days", stroke: "yearly_interest_rate", tip: true}),
+  ],
+  x: {type: "log", domain: [100, 1e6], label: "Capital (USD)"},
+  y: {domain: [0, 720], label: "Duration (d)"},
+  color: {legend: true, domain: [3, 6], label: "Yearly interest rate (%)"}
+})
+))
+}});
+
+</script>
+</head>
+<body>
+<div id="observablehq-center">
+<main id="observablehq-main" class="observablehq">
+<div class="observablehq observablehq--block"><!--:b6be8d94:--></div>
+<h1 id="step-function-discovery-through-minimal-adaptive-sampling" tabindex="-1"><a class="observablehq-header-anchor" href="#step-function-discovery-through-minimal-adaptive-sampling">Step function discovery through minimal adaptive sampling</a></h1>
+<p>This is the interest function when sampled in the simplest way possible, i.e. at fixed intervals (every $3K and 90 days), on somewhat of a grid:</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:e683faa8:--></div>
+<h2 id="1-d-slice-at-fixed-time" tabindex="-1"><a class="observablehq-header-anchor" href="#1-d-slice-at-fixed-time">1D slice at fixed time</a></h2>
+<p>This is the interest currently paid for investments made on a 500-day term, as scanned from $100 (the minimum possible) to $1M (not the maximum possible, but still quite high for most people's financial state):</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:e77d81db:--></div>
+<p>Notice how the interest jumps at "round" amounts of capital, such as the first jump being at $1K exactly, and the second one at $2.5K.</p>
+<h2 id="full-sample-space" tabindex="-1"><a class="observablehq-header-anchor" href="#full-sample-space">Full sample space</a></h2>
+<p>The plot above is just a slice on the actual 2D function, fixing the interval to 500 days and varying the capital invested. The true function looks more like the one below, a 2D surface with colors denoting interest rates. We can take slices at different X and Y values to see the interest rates that would be paid for money locked for different amounts of capital or days, respectively.</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:178f8411:--></div>
+<p>The plots below show the interest rates for <observablehq-loading></observablehq-loading><!--:2d0887cf:--> <observablehq-loading></observablehq-loading><!--:ab51004e:--> days ↕ (left plot) or when investing $<span style="white-space-collapse: preserve; display: inline-block; min-width: 4em; text-align: end"><observablehq-loading></observablehq-loading><!--:bd08022e:--></span> <observablehq-loading></observablehq-loading><!--:ec7fe556:--> ↔ (right plot). Notice that the red and blue line on the main plot move around in sync with these sliders, showing where the slices are being taken:</p>
+<div class="observablehq observablehq--block"><!--:6315f3eb:--></div>
+<div class="observablehq observablehq--block"><!--:cfc678af:--></div>
+<h2 id="smart-sampling-in-1-d" tabindex="-1"><a class="observablehq-header-anchor" href="#smart-sampling-in-1-d">Smart Sampling in 1D</a></h2>
+<p>First, let's look at the simple 1D case where the number of days is fixed. The real function is plotted below, but we don't know that yet:</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:473cb77f:--></div>
+<div class="observablehq observablehq--block"><!--:146cf664:--></div>
+<p>The only valid operation is to "sample" at a particular point, such as here at $<observablehq-loading></observablehq-loading><!--:f0b3d3e2:-->, which will return that the interest at that point is <observablehq-loading></observablehq-loading><!--:536412ee:-->%:</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:eef5b27c:--></div>
+<p>Initially, we sample at the two endpoints of the range, $100 and $1M. These will provide the initial information to start the search:</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:2fae4b85:--></div>
+<p>They are not the same value, so there must be at least one step, somewhere between the two. For lack of a better alternative, sample right in the middle of the two options, rounded to the nearest thousand (note that since the X axis is logarithmic the middle number isn't visually in the middle):</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:f9dc4923:--></div>
+<p>The upper range ($500K to $1M) now has the same value between start and end, therefore there are no steps in there. Any/all steps must be in the lower range ($100 to $500K). We continue sampling there by once again splitting near the middle:</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:72d94727:--></div>
+<p>It's still the same value on the upper interval ($250K to $500K), so no steps there. Split the lower interval ($100 to $250K) again:</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:48a58233:--></div>
+<p>and again:</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:0a7d5b48:--></div>
+<p>Now we finally have a different situation. There are steps to both sides of the point that was just sampled ($100-$70K and also $70K-$130K). We start on the upper side:</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:ffe4f91f:--></div>
+<p>The lower interval is constant and so can be left alone. Now for the interval $100K-$130K:</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:9d4af9d3:--></div>
+<p>On sampling again, we encounter our first guaranteed boundary, because the interest at $100K has one value, and at $100K + 1 has another value. Therefore, that's exactly where the step is (when confining ourselves to integers).</p>
+<p>At this point, the entire range from $70K to $1M is already locked down and fully known. Continue with the lower part ($100-$70K) that is still unknown:</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:920fdfee:--></div>
+<p>Another step, so we repeat on both sides, starting with the upper side ($40K-$70K):</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:29b9c08f:--></div>
+<p>There's still a small unknown region on $50K-$70K, so sample there again:</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:b1a4a493:--></div>
+<p>Another boundary is found, this time at $50K and $50K + 1.</p>
+<p>This cycle continues until the entire range has been explored. Here's a slider so you can see how the search progresses:</p>
+<div class="observablehq observablehq--block"><!--:bfccf40d:--></div>
+<p><observablehq-loading></observablehq-loading><!--:b2963b2d:--> steps</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:9a71ae6b:--></div>
+<p>We've managed to scan a very large interval (from $100 to $1M, so almost a million possible values) in just <observablehq-loading></observablehq-loading><!--:6fcb85fc:--> samples (and even some of those are redundant, but it simplifies the algorithm a lot). Everything else comes for free, since we can cover very large spaces with just a start and an end point, as long as both have the same interest. For example, the entire upper half of the range ($500K to $1M) is entirely defined by those two points, which have the same interest and thus imply that every other point between them also has the same interest.</p>
+<h2 id="not-twice-as-smart-sampling-in-2-d" tabindex="-1"><a class="observablehq-header-anchor" href="#not-twice-as-smart-sampling-in-2-d">Not-Twice-As-Smart Sampling in 2D</a></h2>
+<p>It should be possible to apply another layer of the same sampling technique to a second dimension (here, the number of days), but doing so isn't trivial and it isn't possible to reuse the same exact algorithm. For this particular task I just found the endpoints of the different duration brackets, so the 2D sampling reduces to a sequence of 1D samplings.</p>
+<p>As an optimization, it's possible to reuse the endpoints discovered in the first 1D sampling (for a certain fixed time) on the second sampling (for another time). Ideally, the endpoints for time and for capital are independent, so the second (and further) sampling should reuse the same ones. If this is followed exactly (as is indeed the case), then the second and further samplings will never have to "search around" for their breakpoints, because the endpoints that come from previous samplings will instantly fill the entire domain.</p>
+<div class="observablehq observablehq--block"><!--:4c997504:--></div>
+<div class="observablehq observablehq--block"><!--:25859ff5:--></div>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:8ebaff0b:--></div>
+<p>Notice how the first 1D sampling, here done for 31 days at the bottom, has many more points than the others. This is because on this one it was necessary to do the search procedure in order to find the actual endpoints of each bracket. Every other Y value can then reuse those endpoints to speed up the sampling. In fact, it takes 102 samples to fill the 31-day line, whereas every other day value takes just 20 samples.</p>
+</main>
+<footer id="observablehq-footer">
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-12-01T21:27:32">Dec 1, 2025</a>.</div>
+</footer>
+</div>
+</body>
+</html>

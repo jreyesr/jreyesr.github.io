@@ -38,6 +38,16 @@
         {{ end }}
         
         <div class="content e-content">
+            {{ if .Store.Get "hasObservable" }}
+            {{ with .Resources.Get "observable/dist/index.html" }}
+            {{ with .Content | resources.FromString (.Path | relLangURL) }}
+            <div style="display: flex; justify-content: center;">
+                <a class="observable-notice" href="{{ .RelPermalink }}" target="_blank">Interactive notebook included ↠</a>
+            </div>
+            {{ end }}
+            {{ end }}
+            {{ end }}
+            
             {{ .Content }}
         </div>
         {{ partial "post-info.html" . }}
