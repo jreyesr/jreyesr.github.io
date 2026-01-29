@@ -676,9 +676,10 @@ ul.language-select > li, ul.footer-menu > li {
     font-size: 1.2rem;
     border: none;
     margin-bottom: 1em;
-    
+
     &:hover {
         filter: brightness(85%);
+        border-bottom: 0;
     }
 }
 

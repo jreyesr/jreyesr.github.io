@@ -38,7 +38,7 @@
         {{ end }}
         
         <div class="content e-content">
-            {{ if .Store.Get "hasObservable" }}
+            {{ if or (.Store.Get "hasObservable") .Params.observable }}
             {{ with .Resources.Get "observable/dist/index.html" }}
             {{ with .Content | resources.FromString (.Path | relLangURL) }}
             <div style="display: flex; justify-content: center;">

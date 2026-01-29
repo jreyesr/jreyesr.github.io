@@ -4,3 +4,4 @@ archetypes
 content/posts/semgrep-blog-rules/index.md
 content/posts/langium/index.md
 content/posts/typst/index.md
+content/posts/**/observable/*.md

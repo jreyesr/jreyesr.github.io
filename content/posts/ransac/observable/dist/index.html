@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="generator" content="Observable Framework v1.13.3">
+<title>RANSAC</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="./_observablehq/theme-cotton,sun-faded,wide.622a818d.css">
+<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.ea9fd553.css">
+<link rel="preload" as="style" href="./_npm/katex@0.16.27/dist/katex.min.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-cotton,sun-faded,wide.622a818d.css">
+<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.ea9fd553.css">
+<link rel="stylesheet" type="text/css" href="./_npm/katex@0.16.27/dist/katex.min.css">
+<link rel="modulepreload" href="./_observablehq/client.d3a06b2f.js">
+<link rel="modulepreload" href="./_observablehq/runtime.e080113b.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.73a8ec5a.js">
+<link rel="modulepreload" href="./_import/charts.ddf85403.js">
+<link rel="modulepreload" href="./_import/components.4a0a087e.js">
+<link rel="modulepreload" href="./_import/parameters.411d35f9.js">
+<link rel="modulepreload" href="./_npm/htl@0.3.1/72f4716c.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/inputs.4ef1d259.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/tex.d6648bad.js">
+<link rel="modulepreload" href="./_import/functions.f0d29e4a.js">
+<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.17/d761ef9b.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/9cffc2bd.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/18cbf477.js">
+<link rel="modulepreload" href="./_npm/katex@0.16.27/447ef2b8.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/e780feca.js">
+<link rel="modulepreload" href="./_npm/interval-tree-1d@1.0.4/53fe8176.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/e93ca09f.js">
+<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/0f2de24d.js">
+<link rel="modulepreload" href="./_npm/d3-brush@3.0.0/65eb105b.js">
+<link rel="modulepreload" href="./_npm/d3-chord@3.0.1/7ef8fb2e.js">
+<link rel="modulepreload" href="./_npm/d3-color@3.1.0/aeb57b94.js">
+<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/1d2aed74.js">
+<link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/5ced1d52.js">
+<link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/9ba9c7f3.js">
+<link rel="modulepreload" href="./_npm/d3-drag@3.0.0/4202580c.js">
+<link rel="modulepreload" href="./_npm/d3-ease@3.0.1/cdd7e898.js">
+<link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/b4e2ad9a.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/5e804d15.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.0/86074ef6.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/40599fb3.js">
+<link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/e49e792c.js">
+<link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/8d1e5425.js">
+<link rel="modulepreload" href="./_npm/d3-path@3.1.0/20d3f133.js">
+<link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/7553081f.js">
+<link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/0dfd751c.js">
+<link rel="modulepreload" href="./_npm/d3-random@3.0.1/3c90ee06.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/843b6a76.js">
+<link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/ba24c2e7.js">
+<link rel="modulepreload" href="./_npm/d3-selection@3.0.0/4d94e5b7.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/6d3a6726.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/9f03c579.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/07c9626f.js">
+<link rel="modulepreload" href="./_npm/d3-timer@3.0.1/b58a267d.js">
+<link rel="modulepreload" href="./_npm/d3-transition@3.0.1/004da2ac.js">
+<link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/b5786b3f.js">
+<link rel="modulepreload" href="./_npm/binary-search-bounds@2.0.5/cbf6ba23.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/e08981d9.js">
+<link rel="modulepreload" href="./_npm/delaunator@5.0.1/02d43215.js">
+<link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/aa00730b.js">
+<script type="module">
+
+import {define} from "./_observablehq/client.d3a06b2f.js";
+import {registerFile} from "./_observablehq/stdlib.73a8ec5a.js";
+
+registerFile("./data/Mazar's reservoir-data.csv", {"name":"./data/Mazar's reservoir-data.csv","mimeType":"text/csv","path":"./_file/data/Mazar's reservoir-data.80b11a57.csv","lastModified":1767580878623,"size":194408});
+
+define({id: "c5a6e932", outputs: ["data","plot","plotWithLines","plotNaiveLinReg","plotWithAllRandomSamples","plotWithRandomPointsPicked","plotVotesDensityForParams","plotVotesPowerForParams","plotPointsOfPeakPower","plotEncompassedSpans","plotFinalSolutions","NUM_SAMPLINGS","randomChoices","numVotesForSample","votesInfoPerSample","peaksInfoNoOverlaps","simpleSlider","BUFFER_DISTANCE","PEAK_DETECTION_LOOKAROUND","PEAK_DETECTION_MIN_DENSITY"], body: async () => {
+const [{data, plot, plotWithLines, plotNaiveLinReg, plotWithAllRandomSamples, plotWithRandomPointsPicked, plotVotesDensityForParams, plotVotesPowerForParams, plotPointsOfPeakPower, plotEncompassedSpans, plotFinalSolutions, NUM_SAMPLINGS, randomChoices, numVotesForSample, votesInfoPerSample, peaksInfoNoOverlaps}, {simpleSlider}, {BUFFER_DISTANCE, PEAK_DETECTION_LOOKAROUND, PEAK_DETECTION_MIN_DENSITY}] = await Promise.all([import("./_import/charts.ddf85403.js"), import("./_import/components.4a0a087e.js"), import("./_import/parameters.411d35f9.js")]);
+
+
+return {data,plot,plotWithLines,plotNaiveLinReg,plotWithAllRandomSamples,plotWithRandomPointsPicked,plotVotesDensityForParams,plotVotesPowerForParams,plotPointsOfPeakPower,plotEncompassedSpans,plotFinalSolutions,NUM_SAMPLINGS,randomChoices,numVotesForSample,votesInfoPerSample,peaksInfoNoOverlaps,simpleSlider,BUFFER_DISTANCE,PEAK_DETECTION_LOOKAROUND,PEAK_DETECTION_MIN_DENSITY};
+}});
+
+define({id: "77a97c01", inputs: ["plot","width","display"], body: async (plot,width,display) => {
+display(await(
+plot(width)
+))
+}});
+
+define({id: "be77ad12", inputs: ["plotWithLines","width","display"], body: async (plotWithLines,width,display) => {
+display(await(
+plotWithLines([
+  [new Date("2024-12-26"), 2118, new Date("2025-01-12"), 2145],
+  [new Date("2025-02-20"), 2154, new Date("2025-11-30"), 2154],
+  [new Date("2025-12-03"), 2153.5, new Date("2025-12-27"), 2144],
+], width)
+))
+}});
+
+define({id: "c3d3be4b", inputs: ["plotNaiveLinReg","width","display"], body: async (plotNaiveLinReg,width,display) => {
+display(await(
+plotNaiveLinReg(width)
+))
+}});
+
+define({id: "397fd3b2", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`y = mx + b`
+))
+}});
+
+define({id: "7fac2155", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`m`
+))
+}});
+
+define({id: "142c9965", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`b`
+))
+}});
+
+define({id: "a5d82df3", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`c^2=a^2+b^2`
+))
+}});
+
+define({id: "6cefeaf3", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`-2^{15}`
+))
+}});
+
+define({id: "469ded11", inputs: ["simpleSlider","NUM_SAMPLINGS","view","Event"], outputs: ["randomIdxSlider","randomIdx","setRandomIdx"], body: (simpleSlider,NUM_SAMPLINGS,view,Event) => {
+const randomIdxSlider = simpleSlider(NUM_SAMPLINGS - 1)
+const randomIdx = view(randomIdxSlider)
+const setRandomIdx = (x) => {
+  randomIdxSlider.value = x;
+  randomIdxSlider.dispatchEvent(new Event("input"))
+}
+return {randomIdxSlider,randomIdx,setRandomIdx};
+}});
+
+define({id: "5b2bf83a", inputs: ["plotWithRandomPointsPicked","randomIdx","width","display"], body: async (plotWithRandomPointsPicked,randomIdx,width,display) => {
+display(await(
+plotWithRandomPointsPicked(randomIdx, {inArea: false, timeSpan: false}, width)
+))
+}});
+
+define({id: "c89c886d", mode: "inline", inputs: ["BUFFER_DISTANCE","display"], body: async (BUFFER_DISTANCE,display) => {
+display(await(
+BUFFER_DISTANCE
+))
+}});
+
+define({id: "2b03ef83", inputs: ["Inputs","simpleSlider","NUM_SAMPLINGS","randomIdxSlider","display"], body: async (Inputs,simpleSlider,NUM_SAMPLINGS,randomIdxSlider,display) => {
+display(await(
+Inputs.bind(simpleSlider(NUM_SAMPLINGS - 1), randomIdxSlider)
+))
+}});
+
+define({id: "b67122bb", inputs: ["plotWithRandomPointsPicked","randomIdx","width","display"], body: async (plotWithRandomPointsPicked,randomIdx,width,display) => {
+display(await(
+plotWithRandomPointsPicked(randomIdx, {inArea: true, timeSpan: false}, width)
+))
+}});
+
+define({id: "aa94d09a", mode: "inline", inputs: ["numVotesForSample","randomIdx","display"], body: async (numVotesForSample,randomIdx,display) => {
+display(await(
+numVotesForSample(randomIdx).voteCount
+))
+}});
+
+define({id: "e76f45ea", inputs: ["view","Inputs"], outputs: ["mode"], body: (view,Inputs) => {
+const mode = view(Inputs.radio([
+  {label: "Filling up", offset: 3}, 
+  {label: "Full", offset: 2}, 
+  {label: "Draining", offset: 1}
+], {value: 3, format: x => x.label, valueof: x => x.offset}));
+return {mode};
+}});
+
+define({id: "71cf09aa", inputs: ["plotWithRandomPointsPicked","NUM_SAMPLINGS","mode","width","display"], body: async (plotWithRandomPointsPicked,NUM_SAMPLINGS,mode,width,display) => {
+display(await(
+plotWithRandomPointsPicked(NUM_SAMPLINGS - mode, {inArea: true, timeSpan: false}, width)
+))
+}});
+
+define({id: "7fac2155-1", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`m`
+))
+}});
+
+define({id: "bb139c38", mode: "inline", inputs: ["NUM_SAMPLINGS","display"], body: async (NUM_SAMPLINGS,display) => {
+display(await(
+NUM_SAMPLINGS
+))
+}});
+
+define({id: "7fac2155-2", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`m`
+))
+}});
+
+define({id: "7261073e", mode: "inline", inputs: ["resize","plotVotesDensityForParams","randomIdx","setRandomIdx","display"], body: async (resize,plotVotesDensityForParams,randomIdx,setRandomIdx,display) => {
+display(await(
+resize((width) => plotVotesDensityForParams(randomIdx, setRandomIdx))
+))
+}});
+
+define({id: "b4c5553f", mode: "inline", inputs: ["Inputs","simpleSlider","NUM_SAMPLINGS","randomIdxSlider","display"], body: async (Inputs,simpleSlider,NUM_SAMPLINGS,randomIdxSlider,display) => {
+display(await(
+Inputs.bind(simpleSlider(NUM_SAMPLINGS - 1), randomIdxSlider)
+))
+}});
+
+define({id: "89d5045a", mode: "inline", inputs: ["resize","plotWithRandomPointsPicked","randomIdx","display"], body: async (resize,plotWithRandomPointsPicked,randomIdx,display) => {
+display(await(
+resize((width, height) => plotWithRandomPointsPicked(randomIdx, {inArea: true, timeSpan: true}, width, height))
+))
+}});
+
+define({id: "ffaf6bd4", mode: "inline", inputs: ["html","setRandomIdx","NUM_SAMPLINGS","display"], body: async (html,setRandomIdx,NUM_SAMPLINGS,display) => {
+display(await(
+html`<button onclick=${() => setRandomIdx(NUM_SAMPLINGS - 4)}>this button</button>`
+))
+}});
+
+define({id: "22e169b8", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`P = V^2/R`
+))
+}});
+
+define({id: "f0c529ff", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`\mathrm{mysterious\ unnamed\  metric} = N^2/\Delta t`
+))
+}});
+
+define({id: "7cb489b6", outputs: ["annotations"], body: () => {
+const annotations = [
+  {m: -.007, power: 240000, title: "m≈0, the horizontal line that covers most of the time"},
+  {m: .625, power: 35000, title: "Slower rise on Jan-Feb/2025"},
+  {m: 2.75, power: 25000, title: "Initial rise once water started flowing again"},
+  {m: -.75, power: 21000, title: "The fall!"}
+]
+return {annotations};
+}});
+
+define({id: "8f92159e", mode: "inline", inputs: ["resize","plotVotesPowerForParams","randomIdx","setRandomIdx","annotations","display"], body: async (resize,plotVotesPowerForParams,randomIdx,setRandomIdx,annotations,display) => {
+display(await(
+resize((width) => plotVotesPowerForParams(randomIdx, setRandomIdx, annotations))
+))
+}});
+
+define({id: "b4c5553f-1", mode: "inline", inputs: ["Inputs","simpleSlider","NUM_SAMPLINGS","randomIdxSlider","display"], body: async (Inputs,simpleSlider,NUM_SAMPLINGS,randomIdxSlider,display) => {
+display(await(
+Inputs.bind(simpleSlider(NUM_SAMPLINGS - 1), randomIdxSlider)
+))
+}});
+
+define({id: "89d5045a-1", mode: "inline", inputs: ["resize","plotWithRandomPointsPicked","randomIdx","display"], body: async (resize,plotWithRandomPointsPicked,randomIdx,display) => {
+display(await(
+resize((width, height) => plotWithRandomPointsPicked(randomIdx, {inArea: true, timeSpan: true}, width, height))
+))
+}});
+
+define({id: "a27f633f", mode: "inline", inputs: ["tex","PEAK_DETECTION_LOOKAROUND","display"], body: async (tex,PEAK_DETECTION_LOOKAROUND,display) => {
+display(await(
+tex`\pm${PEAK_DETECTION_LOOKAROUND}`
+))
+}});
+
+define({id: "2fbcc6f0", mode: "inline", inputs: ["tex","PEAK_DETECTION_MIN_DENSITY","display"], body: async (tex,PEAK_DETECTION_MIN_DENSITY,display) => {
+display(await(
+tex`${PEAK_DETECTION_MIN_DENSITY}`
+))
+}});
+
+define({id: "7fac2155-3", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`m`
+))
+}});
+
+define({id: "a27f633f-1", mode: "inline", inputs: ["tex","PEAK_DETECTION_LOOKAROUND","display"], body: async (tex,PEAK_DETECTION_LOOKAROUND,display) => {
+display(await(
+tex`\pm${PEAK_DETECTION_LOOKAROUND}`
+))
+}});
+
+define({id: "1a89c645", inputs: ["plotPointsOfPeakPower","PEAK_DETECTION_LOOKAROUND","PEAK_DETECTION_MIN_DENSITY","display"], body: async (plotPointsOfPeakPower,PEAK_DETECTION_LOOKAROUND,PEAK_DETECTION_MIN_DENSITY,display) => {
+display(await(
+plotPointsOfPeakPower(PEAK_DETECTION_LOOKAROUND, PEAK_DETECTION_MIN_DENSITY)
+))
+}});
+
+define({id: "a27f633f-2", mode: "inline", inputs: ["tex","PEAK_DETECTION_LOOKAROUND","display"], body: async (tex,PEAK_DETECTION_LOOKAROUND,display) => {
+display(await(
+tex`\pm${PEAK_DETECTION_LOOKAROUND}`
+))
+}});
+
+define({id: "23e0329c", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`m \approx 0`
+))
+}});
+
+define({id: "d630bea1", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`m \approx 0.6`
+))
+}});
+
+define({id: "ae3a728e", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`m \approx 2.5`
+))
+}});
+
+define({id: "9e6ae67b", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`m \approx -0.8`
+))
+}});
+
+define({id: "02dc9b2d", inputs: ["plotEncompassedSpans","display"], body: async (plotEncompassedSpans,display) => {
+display(await(
+plotEncompassedSpans()
+))
+}});
+
+define({id: "bf689648", mode: "inline", inputs: ["peaksInfoNoOverlaps","display"], body: async (peaksInfoNoOverlaps,display) => {
+display(await(
+peaksInfoNoOverlaps.length
+))
+}});
+
+define({id: "7fac2155-4", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`m`
+))
+}});
+
+define({id: "142c9965-1", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`b`
+))
+}});
+
+define({id: "5e10cd4a", inputs: ["plotFinalSolutions","width","display"], body: async (plotFinalSolutions,width,display) => {
+display(await(
+plotFinalSolutions(width)
+))
+}});
+
+define({id: "bb139c38-1", mode: "inline", inputs: ["NUM_SAMPLINGS","display"], body: async (NUM_SAMPLINGS,display) => {
+display(await(
+NUM_SAMPLINGS
+))
+}});
+
+define({id: "05c75f98", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`y = -0.01x+2229.8`
+))
+}});
+
+define({id: "142c9965-2", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`b`
+))
+}});
+
+define({id: "2d961cca", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`y = 2.96x-27604.0`
+))
+}});
+
+define({id: "db95cf7b", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`y = 0.59x-3832.3`
+))
+}});
+
+define({id: "e2154a57", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`y = -0.58x+8047.3`
+))
+}});
+
+define({id: "26940e02", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`y = -1.34x+15888.5`
+))
+}});
+
+define({id: "11ae2428", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`x`
+))
+}});
+
+define({id: "26940e02-1", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`y = -1.34x+15888.5`
+))
+}});
+
+define({id: "11ae2428-1", mode: "inline", inputs: ["tex","display"], body: async (tex,display) => {
+display(await(
+tex`x`
+))
+}});
+
+</script>
+</head>
+<body>
+<div id="observablehq-center">
+<main id="observablehq-main" class="observablehq">
+<p>(This notebook is the companion to <a href="../..">this blog post</a>)</p>
+<hr>
+<div class="observablehq observablehq--block"><!--:c5a6e932:--></div>
+<p>(Future jreyesr says: While I was (slowly) writing this post, there were a few decent rain events that increased flow in the Paute river, which feeds the Mazar reservoir, so the water level over time stopped having the nice shape that it will have over this article. Just ignore that and pretend that 2026 hasn't started happening and we're still at about 60% water level and dropping; this post'll make more sense that way)</p>
+<h2 id="prologue" tabindex="-1"><a class="observablehq-header-anchor" href="#prologue">Prologue</a></h2>
+<p>This is <a href="https://en.wikipedia.org/wiki/Mazar_Dam" target="_blank" rel="noopener noreferrer">the reservoir of the Mazar hydroelectric plant</a>:</p>
+<figure>
+<img src="./_file/mazar-0611-1024x683.5b7b78d7.jpg">
+<figcaption>Photo taken on November 2024, when Mazar was essentially empty. Source: <a href="https://www.elcomercio.com/actualidad/negocios/como-esta-el-embalse-de-mazar-tras-lluvias-de-cuenca/" target="_blank" rel="noopener noreferrer">https://www.elcomercio.com/actualidad/negocios/como-esta-el-embalse-de-mazar-tras-lluvias-de-cuenca/</a></figcaption>
+</figure>
+<p>Mazar is the happy home (in good times) of <a href="https://www.celec.gob.ec/celecsur/informacion-tecnica/central-hidroelectrica-paute-mazar/" target="_blank" rel="noopener noreferrer">almost 5.5 million cubic meters of water</a>, which directly and indirectly support about 1.2GW of electricity generation (for context, the entire country's peak electricity demand is maybe 4.5GW, at 6-7PM on weekdays). In other words, when Mazar dries, everyone worries. Two years ago, we had some pretty severe rolling blackouts, more or less from sept/2024 to dec/2024 (side note: losing power for eleven hours a day in three different power cuts from 3 to 4 hours each <em>sucks</em>. Try it sometime if you haven't, it's really fun). Last year (2025, that is), we had no such issues.</p>
+<p>This is the water level in Mazar during the last 13 months or so:</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:77a97c01:--></div>
+<p>(By the way, that data was gathered over the entire year. There's <a href="https://generacioncsr.celec.gob.ec/graficasproduccion/" target="_blank" rel="noopener noreferrer">a little-known dashboard</a> which shows the water level in the reservoirs of four hydroelectric plants, one of which is Mazar. That dashboard takes its data <a href="https://generacioncsr.celec.gob.ec:8443/ords/csr/sardomcsr/pointValues?mrid=30031&amp;fechaInicio=2026-01-14T06:00:00.000Z&amp;fechaFin=2026-01-15T05:00:00.000Z&amp;fecha=14/01/2026%2001:00:00" target="_blank" rel="noopener noreferrer">from an even less-known JSON endpoint</a> that shows the water level for each hour. It's a simple matter to periodically hit that endpoint, pull out the data and store it on a database. On <a href="https://github.com/timescale/timescaledb" target="_blank" rel="noopener noreferrer">a TimescaleDB instance</a> with some cursory compression and columnar storage enabled, between 13 to 14 months of data take a bit over 5MB of disk space, at a 1.5x compression ratio)</p>
+<p>The rolling blackouts stopped almost exactly one year ago, around the middle of December 2024. That's the point at which Mazar's level <span style="color: red">←started to recover→</span>. At around mid february/2025 it reached its top level (at which point, I assume, it started to spill and therefore lose a lot of water that wasn't used for power generation, since its generation capacity was capped out). It <span style="color: green">←stayed more or less constant→</span> until December 2025, at which point it <span style="color: orange">←started to go down→</span> again.</p>
+<p>Theoretically, then, we could model the water level as three lines, something like this:</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:be77ad12:--></div>
+<p>(perhaps with a fourth line to cover the area around February 2025, which is currently not covered by lines 1 nor 2)</p>
+<p>Each of those lines is decently good at approximating the function <em>on a certain time interval</em>, but lousy elsewhere. This article's fun will be in finding those lines automatically (the ones above I drew by hand, manually shifting the start and end points around until the lines looked nice, but we can't have manually-done anythings)</p>
+<h2 id="ransac" tabindex="-1"><a class="observablehq-header-anchor" href="#ransac">RANSAC</a></h2>
+<p>Just trying to model this dataset as a single line makes no sense, for there is no single line that would neatly fit the reservoir filling, staying full, and now draining. In fact, you <em>can</em> try to fit a linear model to the data. A linear model will be found and it will minimize the square error (or whichever other metric is used), it just won't mean anything. Observe:</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:c3d3be4b:--></div>
+<p>The shaded area in the plot above is the 99.9999% confidence range for that dataset's true linear model (yes, <a href="https://en.wikipedia.org/wiki/High_availability#%22Nines%22" target="_blank" rel="noopener noreferrer">six nines</a>. For comparison, AWS S3 is <a href="https://aws.amazon.com/s3/sla/" target="_blank" rel="noopener noreferrer">a measly three nines</a> availability, below which they'll reimburse 10% of that month's cost. And yes, I know I'm mixing metrics here, confidence != availability, but whatever). That indicates that there's a 99.9999% chance that the "true" linear model falls within that band. And, of course, that isn't true, for the simple reason that there's no "true" linear model that fits that data!</p>
+<p>The output of a linear model is just two numbers, since the equation of a line is simply <observablehq-loading></observablehq-loading><!--:397fd3b2:-->. <observablehq-loading></observablehq-loading><!--:7fac2155:--> controls how steep the line is, while <observablehq-loading></observablehq-loading><!--:142c9965:--> moves it vertically. Together, they define any possible straight line in any position in the plane. There are procedures to find the values for those parameters that "best" approximate a set of points, such as the least-squares method, but they won't work here because they assume that the set of points is somewhat like <em>a</em> line, and in fact some methods break down when there are extreme outliers (in much the same way that averaging values will break down when there's an extreme outlier, because it drags the average away from its true value). In particular, the model in the chart above (the line and the confidence bands) was obtained via <a href="https://observablehq.com/@toja/linear-regression-with-confidence-bands" target="_blank" rel="noopener noreferrer">least squares regression</a>, in which the parameters for the slope and intercept are the values that minimize the sum of the squares of the Y distances between each source point and the model's line. This is usually a good first idea if you don't have a strong opinion on what to optimize for, because it matches Euclidean distance (the distance from one point to another is the square root of the sum of squared distances in each coordinate, or you can think of it as in the Pythagoras theorem, <observablehq-loading></observablehq-loading><!--:a5d82df3:-->).</p>
+<p>Another way of getting a line from a set of points is to just randomly sample the set of points, pick out two, and draw the line. There's no guarantees as to how "good" of a line that is, but hey, it's a line, and it's guaranteed to touch at least two points of the set (the two that were sampled to produce said line!). This procedure is called RANSAC, which means RANdom SAmple Consensus:</p>
+<ul>
+<li>Random Sample means just that: take a random sample of the source data (here, take two random points, because that's all that's needed to define a line, assuming the two points aren't coincident, AKA exactly in the same position)</li>
+<li>Consensus because the random sampling will be performed many times, with each sampling "voting" on its preferred parameters. The parameters that are most "voted for" are either the output, or then refined to obtain the output</li>
+</ul>
+<p>RANSAC is used to model a set of data in the presence of outliers, even if very extreme. Here we use "model" as in "linear model", which means taking a set of points and trying to find the line that "best approximates" said points. The reason why RANSAC can be resistant to outliers is that it doesn't consider <em>all</em> the points in the set when computing the model, it just looks at (for a linear regression problem) two points. So it doesn't matter if another point that isn't one of the two sampled is an absurd outlier, as it cannot affect the parameters. Even if we randomly pick an outlier as part of the sample, since the whole procedure is repeated many times, then the next time that same outlier is unlikely to be picked again, so it won't be able to affect that new round's parameters. In fact, there are variants of RANSAC that can work <a href="http://wscg.zcu.cz/WSCG2013/!_2013_J_WSCG-1.pdf" target="_blank" rel="noopener noreferrer">even when less than 5% of the points in the set</a> belong to the "true" model, with the rest being noise or random data (see pages 29 and further in the link above). Least-squares fitting, by contrast, takes every point in the set into account when computing the model, and with 95% of the set being outliers, there's no guarantee as to what will come out of that (in the same way that, if you average 10 normal temperature measurements and one that, for whatever reason, is -273ºC (perhaps due to a mising data point being recorded as 0K), then the average will be inordinately skewed by that single wrong measurement). In our case there are no <em>outliers</em> in the true sense of the word, e.g. there are no times when the water level gets erroneously reported as -32768 meters (as it could happen, for example, with a sensor that reports the water level in meters via a 16-bit signed integer, and which maybe reports a broken wire by using the smallest possible value in 16-bit two's complement <observablehq-loading></observablehq-loading><!--:6cefeaf3:-->). However, there are <em>multiple</em> linear models that we want to apply to the same dataset (one for each fragment of the year), and from the point of view of each model, the points of all other models are outliers, so it works out the same.</p>
+<p>A line is defined by just two points (in other words, any two points that aren't in exactly the same location will define one, and only one, line that passes through both). So we can sample the source set (that is, pick two points at random) and draw a line through them. Below are some examples; drag the slider to pick different pairs of random values. Notice how a line can be drawn for any pair of points, utterly disregarding for the moment whether or not that line is a good fit to the data. Right now, we just pick any two points, and draw the line between them:</p>
+<div class="observablehq observablehq--block"><!--:469ded11:--></div>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:5b2bf83a:--></div>
+<p>Note that each line is accompanied by an shaded area around it, set up so when the line is completely horizontal it covers <observablehq-loading></observablehq-loading><!--:c89c886d:--> meter(s) of water level above and below the line, and whatever the amount of time necessary so that the shaded area doesn't change width as the line tilts. You can't just say "± 2 units" because 2 Y units are 2 meters (which is a reasonable number of pixels; if your screen is similar to mine, then the Y ticks are separated by 5 meters each), whereas 2 X units are 2 milliseconds, which is utterly useless as a range (it's almost nothing). Using the same "2 axis units" in X and in Y would mean that as the line tilts towards vertical, the shaded area would become thinner and thinner. We'd much prefer the shaded area to remain the same width, visually, no matter the line's angle, so we apply an angle-dependent correction factor so as the line becomes more vertical, the area spanned widens to cover more "units" without changing its displayed width.</p>
+<h3 id="voting" tabindex="-1"><a class="observablehq-header-anchor" href="#voting">Voting</a></h3>
+<p>Once we have <em>a</em> line, the next step is to select all the points that are inside that line's shaded area. Those are the "votes" for that particular line. In other words, for any line (generated by picking two points at random from the dataset), any points in the dataset that are "close enough" to that line (that is, points that lie inside that line's companion shaded area) will cast a vote for it (because, from the point of view of those points, that line could be the correct model).</p>
+<p>For example:</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:2b03ef83:--></div>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:b67122bb:--></div>
+<p>The particular line above has received <strong><observablehq-loading></observablehq-loading><!--:aa94d09a:--> votes</strong>. Use the slider above the plot to see other possible lines. You'll see that the most common solution, a line that covers the large interval in which the reservoir was full, should get maybe 6000 votes, which more or less matches the fact that this time of peace and plenty lasted from mid feb/2025 to the end of nov/2025, which is 8.5 months. At a sample per hour that's a total of 6100 points with the reservoir almost full.</p>
+<p>Ideally, we'd (entirely randomly, of course) pick points that look like the examples below (there's three scenarios, click on the radio buttons to toggle between them):</p>
+<div class="observablehq observablehq--block"><!--:e76f45ea:--></div>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:71cf09aa:--></div>
+<p>Of course, we can't control ze randomness, for it's random. We just need to keep generating pairs of points until we randomly stumble onto all three scenarios. The second case, the horizontal line, is very easy to encounter, because there's a lot of possible pairs of points that would yield such a line, whereas the increasing and decreasing lines are less likely to appear, but they'll appear with enough random pairs picked.</p>
+<p>We can get an idea of what RANSAC is doing by plotting the <observablehq-loading></observablehq-loading><!--:7fac2155-1:--> (slope) values corresponding to the random pairs, along with the number of votes granted to each of those parameters. Currently we're taking <observablehq-loading></observablehq-loading><!--:bb139c38:--> random samples. Below, in the plot to the left, the X axis represents the <observablehq-loading></observablehq-loading><!--:7fac2155-2:--> (slope) value of each particular randomly-chosen line (pair of points), and the Y axis depicts what I call the "voter density", which is defined as the number of votes for that line (i.e. the number of points that lie within that line's shaded area, also highlighed in orange on the right-hand plot) divided by the time span of the votes (i.e. the latest time that voted for the line minus the earliest time that voted for it). The reasoning behind this metric is that we want to encourage solutions that cover a portion of the line well, but only a single consecutive portion, rather than a line that crosses from side to side of the graph, covering many points but also with large gaps. The "voter density" metric encourages solutions that cover a tightly packed portion of the line (those that cover as many points as possible with little or no gaps). For example, click on the points near the top on the plot below (the ones that have voter density about 45 in the Y axis); you'll see how, in the span that they cover, they cover almost everything, whereas the ones with low density (towards the bottom of the plot) have a large time span but cover few points inside said span, so their "voter density" is lower.</p>
+<div class="grid grid-cols-2">
+    <div class="card">
+        <p>Click on a point! <i>(You may need to click multiple times, points are small and sometimes don't register clicks. Sorry about that.)</i></p>
+        <observablehq-loading></observablehq-loading><!--:7261073e:-->
+    </div>
+    <div class="card" style="overflow: hidden;">
+        <observablehq-loading></observablehq-loading><!--:b4c5553f:-->
+        <observablehq-loading></observablehq-loading><!--:89d5045a:-->
+    </div>
+</div>
+<h3 id="ranking" tabindex="-1"><a class="observablehq-header-anchor" href="#ranking">Ranking</a></h3>
+<p>However, just using voter density to pick the "best" solutions has a drawback, in that it also rewards solutions that only cover a tiny portion of the line. For example, click <observablehq-loading></observablehq-loading><!--:ffaf6bd4:--> (and yes, this one isn't random, I've hardcoded it to make a point!). That covers a very small region of the line, and <em>of course</em> it'll have very good density in that area (in other words, the number of votes for that line is small, but so is its time span, and both numbers divide out to be a fairly good density, pretty much as good as it can be, since in its area of coverage that line covers every last point). This means that a high voter density isn't necessarily an indication of a good model.</p>
+<p>We can do better by multiplying this density value by the number of votes for each line, that encourages solutions with good density and also with many votes. I have no good names for this metric, but it reminds me of the <observablehq-loading></observablehq-loading><!--:22e169b8:--> formula for power dissipation in electronics (this one is <observablehq-loading></observablehq-loading><!--:f0c529ff:-->), so I decree it shall henceforth be named "voter power" (and no, that name isn't an advertisement for the Democratic Republic of Borduria).</p>
+<p>Now using this new metric for the Y value, the plot becomes somewhat different:</p>
+<div class="observablehq observablehq--block"><!--:7cb489b6:--></div>
+<div class="grid grid-cols-2">
+    <div class="card">
+        <p>Click on points near the annotations!</p>
+        <observablehq-loading></observablehq-loading><!--:8f92159e:-->
+    </div>
+    <div class="card" style="overflow: hidden;">
+        <observablehq-loading></observablehq-loading><!--:b4c5553f-1:-->
+        <observablehq-loading></observablehq-loading><!--:89d5045a-1:-->
+    </div>
+</div>
+<p>In the plot above, there's an additional metric, the voter density, displayed by each point's color (that is, the same thing that we were plotting before, except now it isn't encoded in the Y position but in the color instead). Dark red points (and yes, I know that color-blindness exists, but the color scheme used is Turbo, which <a href="https://research.google/blog/turbo-an-improved-rainbow-colormap-for-visualization/" target="_blank" rel="noopener noreferrer">is supposed to work</a> for color-blind people too, except in the case of total color-blindness) have the highest possible density, which is 48. The X unit that is used for the time plots is 2 days, and the data has 1 sample per hour, so it all tracks. There's just no way for any line to match more than 48 points in any 2-day period.</p>
+<p>Now let's do some very basic peak detection: we'll count a point as a "peak" only if there are no points with a higher voter power (Y axis) in a <observablehq-loading></observablehq-loading><!--:a27f633f:--> slope (X axis) neighborhood around it. Furthermore, we'll only consider a point as a peak if it has a high enough voter density (over <observablehq-loading></observablehq-loading><!--:2fbcc6f0:-->), so as to filter some points that have wildly unreasonable slopes, but since they're isolated (far away from other points in <observablehq-loading></observablehq-loading><!--:7fac2155-3:--> space), they'd be counted as peaks otherwise. The peaks are marked in red and have their <observablehq-loading></observablehq-loading><!--:a27f633f-1:--> neighborhood displayed (so you can see that they're the top values in their neighborhoods), with every other non-peak point in light blue:</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:1a89c645:--></div>
+<blockquote>
+<p><em>Note that on the plot above, the <observablehq-loading></observablehq-loading><!--:a27f633f-2:--> neighborhoods don't look symmetric, which is because the X axis itself isn't uniformly spaced. It's using <a href="https://matplotlib.org/stable/gallery/scales/symlog_demo.html" target="_blank" rel="noopener noreferrer">a symlog scale</a> so points near X=0 are more spread out, and they compress as they get away from 0, which means that the neighborhoods also start squishing down. Also, the lower part of the diagram is cut off, and only points with voter power &gt; 1k are shown.</em></p>
+</blockquote>
+<p>The number of detected peaks varies (you can reload this page and you'll probably see different peaks) due to the random sampling that generates the points from which the peaks are chosen. But there's always a peak at <observablehq-loading></observablehq-loading><!--:23e0329c:-->, one at <observablehq-loading></observablehq-loading><!--:d630bea1:-->, one at <observablehq-loading></observablehq-loading><!--:ae3a728e:--> and one at <observablehq-loading></observablehq-loading><!--:9e6ae67b:-->. These are the peaks that correspond to the main epochs (filling, filling but slower, stable, and dropping).</p>
+<p>In addition to filtering low-density peaks, we could also supress peaks whose time span is entirely contained in another, higher peak. The reasoning for this is that if we have a possible model A (denoted by a point) that gets votes from a small time range and <em>also</em> has a lower voter power than another model B, then A is worse on both counts than B and we should always prefer B. For example, let's say that we have a possible model supported by votes from January 10 to January 20, and with a voter power of 4000. If there's another model supported by votes from January 1 to January 31 (which entirely encompasses the time span of the other model) and with a voter power of 20,000, then the second model is better on both aspects than the first one: it covers a larger time range, which we want (we want to encourage models that explain as much of the time range as possible) and it has a larger voter power (which indicates a better voter density and/or more votes for it). So the second model should just eat the first one and supress it, even if the first model were to otherwise become a peak.</p>
+<p>Below are the peaks (only the peaks, from the plot above), but now the X axis is the time spanned by each peak (that is, the min time to the max time of the points that voted for that solution). The Y axis is still the voter power of that solution.</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:02dc9b2d:--></div>
+<p>Depending on how the random generation went (you can reload this page to see a new set of points), you may see one or several peaks that are completely encompassed by another (surrounded by both sides in time, and below the encompassing peak in the Y direction). Those encompassed points could be ignored because there's an altogether better alternative, with more voter power and covering a larger interval.</p>
+<p>This procedure is somewhat similar to <a href="https://naokishibuya.github.io/blog/2022-06-01-object-detection-non-maximum-suppression/" target="_blank" rel="noopener noreferrer">non-maximum supression</a> in computer vision (AI!) models, where a bunch of mostly-similar boxes that may or may not surround a detected object are coalesced into a single box, where sufficiently-overlapping boxes with a lower detection score for a certain object class are deleted. In this case we're very strict on the overlap required (one of the two areas must be entirely contained by another), and it's in 1D rather than the more common 2D case, but the main idea is also to supress redundant, smaller detections.</p>
+<p>In the end, we have <strong><observablehq-loading></observablehq-loading><!--:bf689648:--> peaks</strong> (this is ignoring the ones that were completely covered by a larger, higher-power peak). For each one, we know its parameters (<observablehq-loading></observablehq-loading><!--:7fac2155-4:--> and <observablehq-loading></observablehq-loading><!--:142c9965-1:-->), as well as its start and end time points (which determine the time range that supports that peak) and the density&amp;power metrics, derived from the number of voters for that peak. We can plot those solutions against the original data, to see what they cover and how well they do. Recall that each "solution" (some of which are peaks, if there isn't a better solution nearby) represents a 2D line, with a slope and a Y offset, and we know from where to where it covers because of which points voted for it. We can plot those lines alongside the source data, and even include the line equation for each:</p>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:5e10cd4a:--></div>
+<p>Not bad, eh?</p>
+<p>Also, for those that read the source code: yes, I <em>have</em> hard-coded three lines, which cover the three stages of filling. Technically this is cheating, because the RANSAC procedure no longer needs to randomly find those solutions, they're always included as if they were found. I have to do that so the plot above with the radio buttons, the one that displays the Filling up, Full and Draining scenarios, works as expected. However, at <observablehq-loading></observablehq-loading><!--:bb139c38-1:--> random samples taken, that doesn't affect things anymore. I've run RANSAC multiple times <em>without</em> the hardcoded samples, and it always finds those three scenarios on its own. Here's a screenshot (this time a static one, not an interactive plot) of one of those runs, without any help. Notice how the three scenarios are found anyways, even the two different filling speeds and the two draining speeds are detected:</p>
+<p><img src="./_file/finalSamples.8eb6418d.png" alt=""></p>
+<p>Now we can finally make assertions about the rate of change of the reservoir's level. For example:</p>
+<ul>
+<li>The long almost-horizontal line is something like <observablehq-loading></observablehq-loading><!--:05c75f98:--> (yours may vary, it's random after all). This indicates that during the time range covered by that line, the level almost didn't change with time, and in fact it held at about 2230 meters above sea level (that's what the intercept parameter <observablehq-loading></observablehq-loading><!--:142c9965-2:--> indicates for a horizontal line)</li>
+<li>During the first fill-up stage, happening near the start of January 2025, the equation was something like <observablehq-loading></observablehq-loading><!--:2d961cca:-->. Here the intercept doesn't have a clean interpretation, but the slope does: it's almost 3 meters per X interval, which is 2 days, so about +1.5 meters per day</li>
+<li>The second, slower fill-up stage has an equation like <observablehq-loading></observablehq-loading><!--:db95cf7b:-->, +0.3 meters per day</li>
+<li>Finally, near the end, the reservoir drained at two speeds: the first one, during the first half of December, is modeled by something like <observablehq-loading></observablehq-loading><!--:e2154a57:-->, so -0.3 meters per day. Then it started draining faster, near <observablehq-loading></observablehq-loading><!--:26940e02:-->, so -0.7 meters per day at the end</li>
+</ul>
+<p>In fact, with that last equation we could predict when the reservoir would be empty (assuming the rate of draining didn't increase, which is only true if a) demand doesn't change, which it does since we're entering winter and winter is hot, b) no other rivers increase or decrease flow, which they do, and c) Mazar's reservoir didn't change area as it drained and it were a perfectly vertically extruded solid, which it isn't since it has sediment at the bottom that reduces the usable volume at lower heights). If such pesky real-world constraints didn't exist, and kowing that Mazar must stop if the level ever goes below 2110 meters (I think?), we can solve for <observablehq-loading></observablehq-loading><!--:11ae2428:--> using the equation for the last stage, let's say <observablehq-loading></observablehq-loading><!--:26940e02-1:-->, and we find out that <observablehq-loading></observablehq-loading><!--:11ae2428-1:--> in that case would be about 10282. That must be multiplied by the number of milliseconds in two days, and it ends up as 1770996533333 millis, which is February 13, 2026.</p>
+<p>Alternatively: we have records until January 1st. At that point the reservoir was at 2139.4 meters, so it had 29.4 meters left. It was draining at about .67 meters per day, so it'd take almost 44 days to lose all its height. 44 days after January 1st is February 13, which checks out. In other words, if that last linear model held up, we'd most likely start having blackouts in the middle of February.</p>
+<p>Around January 10, the Paute river (which feeds Mazar) started seeing some water again. During December it had been at maybe 20 cubic meters per second, and on January 13 it reached almost 60. You can see the current water level <a href="https://generacioncsr.celec.gob.ec/graficasproduccion/" target="_blank" rel="noopener noreferrer">on this link</a> (set Tipo to Hidrología, Periodo to Mensual, and the date selector to something in January 2026). As I write this, we've gained almost two meters in three days, it has rained in Guayaquil for the first serious time since eight or nine months ago, and hopefully there won't be blackouts in the next few months...</p>
+<p>...apart from those localized power cuts caused <a href="https://www.eluniverso.com/guayaquil/comunidad/caida-de-poste-deja-sin-servicio-de-energia-electrica-a-sector-del-suroeste-de-guayaquil-nota/" target="_blank" rel="noopener noreferrer">by lampposts falling down due to the rain, that is</a>.</p>
+<figure>
+    <img src="./_file/lamppost1.7c8920d6.jpg">
+    <img src="./_file/lamppost2.e6fb6799.jpg">
+    <figcaption>Images by Carlos Barros. Source: <a href="https://www.eluniverso.com/guayaquil/comunidad/caida-de-poste-deja-sin-servicio-de-energia-electrica-a-sector-del-suroeste-de-guayaquil-nota/" target="_blank" rel="noopener noreferrer">https://www.eluniverso.com/guayaquil/comunidad/caida-de-poste-deja-sin-servicio-de-energia-electrica-a-sector-del-suroeste-de-guayaquil-nota/</a></figcaption>
+</figure>
+</main>
+<footer id="observablehq-footer">
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-01-16T19:45:47">Jan 16, 2026</a>.</div>
+</footer>
+</div>
+</body>
+</html>

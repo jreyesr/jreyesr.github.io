@@ -1,5 +1,5 @@
 export default {
-  title: "Interest Rates",
+  title: "RANSAC",
   // head: '<link rel="icon" href="observable.png" type="image/png" sizes="32x32">',
 
   root: "src",
