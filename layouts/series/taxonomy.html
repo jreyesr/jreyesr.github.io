@@ -1,33 +1,11 @@
 {{ define "main" }}
-    <h1>
-        Posts in series {{ .Params.Name }} 
-        {{ with .OutputFormats.Get "rss" -}}
-            <ul class="social-icons" style="display: inline;">
-                <li>
-                    <a {{ printf "href=%q" .Permalink | safeHTMLAttr }} title="RSS feed for the series" rel="me">
-                    {{ partial "font-awesome.html" (dict "iconName" "rss" "custom" false) }}
-                    </a>
-                </li>
-            </ul>
-        {{ end -}}
-    </h1>
-    
-    <div>
-        <small>
-            {{ .Params.Description }}
-        </small>
-    </div>
-    
-    <div>
-    {{ with .Params.Link }}
-        <a href="{{ . }}">{{ . }}</a>
-    {{ end }}
-    </div>
+    <h1>Series</h1>
 
-    {{ $pages := where .Pages "Params.hidden" "!=" true }}
-    {{ range (.Paginate $pages).Pages }}
-        {{ partial "post-summary.html" . }}
-    {{ end }}
-    {{ partial "pagination.html" . }}
+    <div><small>Some series have a defined start and end, and group a set of articles that would otherwise be too long. Other series are containers where articles may occasionally be stored, with no defined end.</small></div>
 
+    {{ range .Data.Terms }}
+    <p>
+        <a href="{{ .Page.RelPermalink }}">{{ .Page.Params.Name }}</a>
+    </p>
+    {{ end }}
 {{ end }}

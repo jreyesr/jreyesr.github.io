@@ -1,0 +1,21 @@
+{{ define "main" }}
+<h1>Series: {{ .Params.Name }} {{ with .OutputFormats.Get "rss" -}}
+    <ul class="social-icons" style="display: inline;">
+        <li>
+            <a {{ printf "href=%q" .Permalink | safeHTMLAttr }} title="RSS feed for the series" rel="me">
+            {{ partial "font-awesome.html" (dict "iconName" "rss" "custom" false) }}
+            </a>
+        </li>
+    </ul>
+{{ end -}}</h1>
+{{ with .Params.Description }}
+<div><small>{{ . }}</small></div>
+{{ end }}
+
+{{ $pages := where .Pages "Params.hidden" "!=" true }}
+{{ range (.Paginate $pages).Pages }}
+    {{ partial "post-summary.html" . }}
+{{ end }}
+{{ partial "pagination.html" . }}
+
+{{ end }}

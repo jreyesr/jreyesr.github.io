@@ -4,10 +4,10 @@
 {{ .Page.Store.Add "galleries" (slice $id) }}
 
 {{ $params := newScratch }}
-{{ if .Params.instant }}{{ $params.Set "speed" 0 }}{{ end }}
-{{ if .Params.instant }}{{ $params.Set "rewind" true }}{{ end }}
+{{ if and (ne .Params nil) (isset .Params "instant") .Params.instant }}{{ $params.Set "speed" 0 }}{{ end }}
+{{ if and (ne .Params nil) (isset .Params "instant") .Params.rewind }}{{ $params.Set "rewind" true }}{{ end }}
 
-<section class="splide" id="{{ $id }}" {{ with .Params.title }}aria-label="{{ . }}"{{ end }} data-splide='{{ $params.Values | jsonify }}'>
+<section class="splide" id="{{ $id }}" {{ with .Params }}aria-label="{{ .title }}"{{ end }} data-splide='{{ $params.Values | jsonify }}'>
   <div class="splide__track">
 		<ul class="splide__list">
 			{{ range (split .Inner "\n" | complement (slice "")) }}
