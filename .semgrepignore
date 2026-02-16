@@ -1,5 +1,5 @@
 themes
-content/series
+content/series/**/_index.md
 archetypes
 content/posts/semgrep-blog-rules/index.md
 content/posts/langium/index.md

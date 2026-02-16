@@ -1,6 +1,14 @@
 repos:
-- repo: https://github.com/semgrep/semgrep
-  rev: 'v1.67.0'
-  hooks:
-    - id: semgrep
-      args: ['--config', 'semgrep_rules', '--error', '--skip-unknown-extensions', '--include=content/posts/**/*.md', '--verbose']
+  - repo: https://github.com/semgrep/semgrep
+    rev: "v1.151.0"
+    hooks:
+      - id: semgrep
+        args:
+          [
+            "--config",
+            "semgrep_rules",
+            "--error",
+            "--skip-unknown-extensions",
+            "--include=content/posts/**/*.md",
+            "--verbose",
+          ]
