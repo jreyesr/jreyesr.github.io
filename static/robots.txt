@@ -2,6 +2,8 @@ Sitemap: https://blog.jreyesr.com/sitemap.xml
 
 User-agent: *
 Disallow: /
+user-agent: Google-Extended
+disallow: /
 
 # Search engines
 User-agent: Googlebot

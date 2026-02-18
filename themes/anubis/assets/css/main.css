@@ -901,3 +901,8 @@ aside > nav > ul {
   stroke-linejoin: round;
   stroke-width: 2px;
 }
+
+.ai-summary {
+  display: none;
+  user-select: none;
+}
